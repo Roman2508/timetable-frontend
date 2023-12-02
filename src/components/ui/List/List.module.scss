@@ -1,0 +1,40 @@
+.wrapper {
+  padding: 8px 0px;
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  border-radius: 6px;
+}
+
+.wrapperDark {
+  background-color: #343a46;
+}
+.wrapperLight {
+  background-color: #ffffff;
+}
+
+.item {
+  padding: 16px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.itemDark {
+  &:hover {
+    background-color: #414857;
+  }
+
+  &:active {
+    background-color: rgb(43, 47, 56);
+  }
+}
+
+.itemLight {
+  &:hover {
+    background-color: #eff0f0;
+  }
+
+  &:active {
+    background-color: #d5d5d5;
+  }
+}

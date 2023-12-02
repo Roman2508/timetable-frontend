@@ -1,0 +1,20 @@
+.select-menu-dark .css-1nmdiq5-menu {
+  background-color: #343a46 !important;
+}
+
+.select-menu-dark .css-1n6sfyn-MenuList {
+  border-radius: 4px !important;
+  background-color: #343a46 !important;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.select-menu-dark div {
+  color: #fff !important;
+
+  &[aria-selected="false"]:hover {
+    background-color: lighten($color: #343a46, $amount: 5%) !important;
+  }
+  &[aria-selected="true"] {
+    background-color: lighten($color: #343a46, $amount: 15%) !important;
+  }
+}

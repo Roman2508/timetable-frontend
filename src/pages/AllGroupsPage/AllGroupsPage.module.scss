@@ -1,0 +1,49 @@
+.container {
+  max-width: 1200px;
+  padding: 20px;
+  margin: 20px auto 0;
+
+  display: flex;
+}
+
+.col-left {
+  width: calc(40% - 10px);
+  margin-right: 20px;
+}
+
+.col-right {
+  width: calc(60% - 10px);
+}
+
+.col-left-title {
+  margin-bottom: 20px;
+  text-align: left;
+  height: 36px;
+  display: flex;
+  align-items: center;
+}
+
+.subdiv-groups-count {
+  margin-top: 4px;
+  font-size: 16px;
+  opacity: 0.7;
+}
+
+.col-right-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  height: 36px;
+}
+
+.selected-group {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-left: 20px;
+}
+
+.groupName:hover {
+  text-decoration: underline;
+}

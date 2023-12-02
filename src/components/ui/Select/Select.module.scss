@@ -1,0 +1,116 @@
+.select-wrapper {
+  position: relative;
+}
+
+.select {
+  border: 1px solid #acaec9 !important;
+  background-color: transparent !important;
+  position: relative !important;
+
+  &.light * {
+    color: #000000 !important;
+  }
+
+  &.dark * {
+    color: #fafafa !important;
+  }
+
+  &.light:hover {
+    border: 1px solid #000000 !important;
+  }
+  &.dark:hover {
+    border: 1px solid #ffffff !important;
+  }
+
+  &::before {
+    content: "" !important;
+    position: absolute !important;
+  }
+
+  &.focused {
+    background-color: transparent !important;
+    //   border: 2px solid #20bd5f !important;
+    border-color: #20bd5f !important;
+    box-shadow: 0 0 0 1px #20bd5f !important;
+
+    &:hover {
+      border: 1px solid #20bd5f !important;
+    }
+  }
+}
+
+.label {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 10px;
+  z-index: 10;
+  transition: all 0.2s ease-in-out;
+  z-index: 0;
+
+  &.focused,
+  &.notEmpty {
+    top: -1px;
+    font-size: 12px;
+    z-index: 1;
+    color: #20bd5f;
+    transition: all 0.2s ease-in-out;
+
+    &::before {
+      content: "";
+      width: calc(100% + 7px);
+      height: 4px;
+      top: 45%;
+      left: -3px;
+      z-index: -1;
+      display: inline-block;
+      position: absolute;
+    }
+  }
+
+  &.labelLight {
+    &.light::before {
+      background-color: #f4f4f4;
+    }
+    &.dark::before {
+      background-color: #23272f;
+    }
+  }
+
+  &.labelDark {
+    &.light::before {
+      background-color: #ffffff;
+    }
+    &.dark::before {
+      background-color: #343a46;
+    }
+  }
+
+  &.notEmpty.light {
+    color: #00272f;
+  }
+  &.notEmpty.dark {
+    color: #fafafa;
+  }
+  &.focused.notEmpty {
+    color: #20bd5f;
+  }
+}
+
+/* select items */
+
+.select-item {
+  padding: 8px;
+  color: #000 !important;
+
+  &:hover {
+    background-color: darken($color: rgb(250, 250, 250), $amount: 5%);
+    // background-color: lighten($color: #20bd5f, $amount: 45%);
+    cursor: pointer;
+    user-select: none;
+  }
+
+  &.selected {
+    background-color: lighten($color: #343a46, $amount: 60%);
+  }
+}

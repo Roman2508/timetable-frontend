@@ -1,0 +1,26 @@
+.iconButton {
+  display: inline-flex;
+  cursor: pointer;
+  line-height: 60px;
+  border-radius: 50%;
+  text-align: center;
+  padding: 8px;
+  justify-content: center;
+  align-items: center;
+}
+
+.light:hover {
+  background-color: lighten($color: #343a46, $amount: 60%);
+}
+
+.light.dark-bg:hover {
+  background-color: lighten($color: #343a46, $amount: 5%);
+}
+
+.dark:hover {
+  background-color: lighten($color: #343a46, $amount: 5%);
+}
+
+.iconButton:active {
+  transform: scale(0.85);
+}

@@ -1,11 +1,13 @@
 .select-wrapper {
   position: relative;
+  font-size: 18px !important;
 }
 
 .select {
   border: 1px solid #acaec9 !important;
   background-color: transparent !important;
   position: relative !important;
+  height: 43px !important;
 
   &.light * {
     color: #000000 !important;

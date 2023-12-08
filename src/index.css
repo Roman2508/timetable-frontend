@@ -17,6 +17,7 @@ html,
 body,
 #root {
   height: 100%;
+  overflow-x: hidden;
 }
 
 * {
@@ -27,6 +28,10 @@ body,
   list-style: none;
   text-decoration: none;
   color: inherit;
+
+  /* scrollbar from moz */
+  scrollbar-color: #414857 #f4f4f4;
+  scrollbar-width: thin;
 }
 
 .dark-theme {
@@ -37,7 +42,6 @@ body,
 }
 
 .light-theme {
-  /* background-color: #fafafa; */
   background-color: #f4f4f4;
   color: #00272f;
   min-height: 100vh;
@@ -48,4 +52,14 @@ body,
   max-width: 1920px;
   margin: 0 auto;
   padding: 0 10px;
+}
+
+::-webkit-scrollbar {
+  background-color: #f4f4f4;
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #414857;
+  border-radius: 3px;
 }

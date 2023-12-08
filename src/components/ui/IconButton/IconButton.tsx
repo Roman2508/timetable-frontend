@@ -7,12 +7,14 @@ interface IIconButtonProps {
   children: JSX.Element | JSX.Element[] | string | string[]
   sx?: React.CSSProperties
   bg?: "dark" | "light"
+  [propName: string]: any
 }
 
 const IconButton: React.FC<React.PropsWithChildren<IIconButtonProps>> = ({
   children,
   sx = {},
   bg = "light",
+  ...props
 }) => {
   const { colorMode } = React.useContext(ThemeContext)
 
@@ -24,6 +26,7 @@ const IconButton: React.FC<React.PropsWithChildren<IIconButtonProps>> = ({
         [styles["dark"]]: colorMode === "dark",
         [styles["dark-bg"]]: bg === "dark",
       })}
+      {...props}
     >
       {children}
     </div>

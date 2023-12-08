@@ -12,7 +12,7 @@ import IconButton from "../ui/IconButton/IconButton"
 const pages = [
   { path: "/", name: "Групи" },
   { path: "/1", name: "Розподіл" },
-  { path: "/2", name: "Плани" },
+  { path: "/plans", name: "Плани" },
   { path: "/3", name: "Викладачі" },
   { path: "/4", name: "Аудиторії" },
   { path: "/5", name: "Навантаження" },

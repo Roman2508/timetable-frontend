@@ -101,23 +101,25 @@
   align-items: center;
   justify-content: space-between;
   border-top: 1px solid white;
-  padding: 8px 16px;
-
-  span {
-    display: block;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    width: calc(100% - 90px);
-    height: 1.2em;
-    white-space: nowrap;
-  }
+  padding: 4px 0;
 
   &:hover {
     background-color: #3e4553;
     cursor: pointer;
   }
+}
 
-  &:last-of-type {
-    // border-bottom: 1px solid white;
-  }
+.plan-name {
+  padding: 8px 16px;
+  height: 30px;
+  display: block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: calc(100% - 100px);
+  height: 40px;
+  white-space: nowrap;
+}
+
+.plan-controls {
+  padding-right: 8px;
 }

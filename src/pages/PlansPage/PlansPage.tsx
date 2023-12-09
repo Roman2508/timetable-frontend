@@ -9,6 +9,7 @@ import styles from "./PlansPage.module.scss"
 import Title from "../../components/ui/Title/Title"
 import Paper from "../../components/ui/Paper/Paper"
 import IconButton from "../../components/ui/IconButton/IconButton"
+import { NavLink } from "react-router-dom"
 
 const plans = [
   {
@@ -144,7 +145,9 @@ const PlansPage = () => {
                 >
                   {el.plans.map((plan) => (
                     <div className={styles["plan"]} key={plan.id}>
-                      <span>{plan.name}</span>
+                      <NavLink className={styles["plan-name"]} to={`/plan/${plan.id}`}>
+                        {plan.name}
+                      </NavLink>
 
                       <div className={styles["plan-controls"]}>
                         <IconButton

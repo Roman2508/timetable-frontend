@@ -11,7 +11,7 @@ interface IInputProps {
   label?: string
   value?: string
   width?: string
-  htmlType?: "text" | "number"
+  htmlType?: "text" | "number" | "search"
   setValue: React.Dispatch<React.SetStateAction<string>>
   sx?: React.CSSProperties
   wrapperSx?: React.CSSProperties

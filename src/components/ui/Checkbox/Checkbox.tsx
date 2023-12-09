@@ -2,7 +2,7 @@ import React from "react"
 import cn from "classnames"
 
 import styles from "./Checkbox.module.scss"
-import { ThemeContext } from "@/app/layout"
+import { ThemeContext } from "../../../App"
 
 interface ICheckboxProps {
   isChecked?: boolean

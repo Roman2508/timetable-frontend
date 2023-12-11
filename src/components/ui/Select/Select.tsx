@@ -19,7 +19,7 @@ interface ISelectComponentProps {
 const SelectComponent: React.FC<ISelectComponentProps> = ({
   labelBgColor = 'light',
   options = [],
-  onChange = (e: any) => {},
+  onChange = (_: any) => {},
   selectValue = null,
   width = 'auto',
   multi = false,
@@ -86,7 +86,7 @@ const SelectComponent: React.FC<ISelectComponentProps> = ({
 }
 
 const CustomOption = (props: OptionProps) => {
-  const { innerProps, isDisabled, data, children, innerRef, getStyles } = props
+  const { innerProps, isDisabled, /*  data, */ children, innerRef /* getStyles */ } = props
   // console.log(props)
 
   return !isDisabled ? (

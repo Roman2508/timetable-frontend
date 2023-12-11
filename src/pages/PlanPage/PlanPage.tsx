@@ -36,9 +36,7 @@ const PlanPage = () => {
           width="350px"
           selectValue={selectedSemesters}
           onChange={(selectedItem) => {
-            setSelectedSemesters((prev) => {
-              return [...selectedItem]
-            })
+            setSelectedSemesters([...selectedItem])
           }}
           multi
           options={[
@@ -80,7 +78,7 @@ const PlanPage = () => {
         <TableBody>
           {Array(17)
             .fill(null)
-            .map((el) => (
+            .map((_) => (
               <TableRow>
                 <TableBodyCell isHover>Менеджмент</TableBodyCell>
                 <TableBodyCell isHover>60</TableBodyCell>

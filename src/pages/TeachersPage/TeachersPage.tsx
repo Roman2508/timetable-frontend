@@ -1,4 +1,4 @@
-import React from 'react'
+// import React from 'react'
 import styles from './TeachersPage.module.scss'
 import Paper from '../../components/ui/Paper/Paper'
 import Title from '../../components/ui/Title/Title'

@@ -4,7 +4,7 @@ import { ThemeContext } from "../../../App"
 import cn from "classnames"
 
 interface IPaperProps {
-  children: JSX.Element | JSX.Element[] | string
+  children: JSX.Element | JSX.Element[] | string | any
   width?: string
   sx?: React.CSSProperties
   classNames?: string

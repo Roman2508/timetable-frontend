@@ -41,8 +41,8 @@ export const TeachersPage = () => {
           </Title>
 
           <div className={styles['teachers-form']}>
-            <Input setValue={() => {}} label="Назва категорії" labelBackColor="dark" width="245px" />
-            <Input setValue={() => {}} label="Номер категорії" labelBackColor="dark" width="245px" htmlType="number" />
+            <Input setValue={() => {}} label="Назва" labelBackColor="dark" width="245px" />
+            <Input setValue={() => {}} label="Номер" labelBackColor="dark" width="245px" htmlType="number" />
           </div>
 
           <div className={styles['categories-controls']}>

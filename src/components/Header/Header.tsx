@@ -1,23 +1,22 @@
-import React from 'react'
-import styles from './Header.module.scss'
-import { ThemeContext } from '../../App'
-import { VscAccount as AccountIcon } from 'react-icons/vsc'
-import SwitchColorMode from '../ui/SwitchColorMode/SwitchColorMode'
+import React from "react"
+import cn from "classnames"
+import { NavLink } from "react-router-dom"
+import { VscAccount as AccountIcon } from "react-icons/vsc"
 
-import { NavLink } from 'react-router-dom'
-
-import cn from 'classnames'
-import IconButton from '../ui/IconButton/IconButton'
+import { ThemeContext } from "../../App"
+import styles from "./Header.module.scss"
+import IconButton from "../ui/IconButton/IconButton"
+import SwitchColorMode from "../ui/SwitchColorMode/SwitchColorMode"
 
 const pages = [
-  { path: '/', name: 'Групи' },
-  { path: '/1', name: 'Розподіл' },
-  { path: '/plans', name: 'Плани' },
-  { path: '/teachers', name: 'Викладачі' },
-  { path: '/4', name: 'Аудиторії' },
-  { path: '/5', name: 'Навантаження' },
-  { path: '/6', name: 'Контроль вичитки' },
-  { path: '/7', name: 'Розклад' },
+  { path: "/", name: "Групи" },
+  { path: "/distribution", name: "Розподіл" },
+  { path: "/plans", name: "Плани" },
+  { path: "/teachers", name: "Викладачі" },
+  { path: "/auditories", name: "Аудиторії" },
+  { path: "/5", name: "Навантаження" },
+  { path: "/6", name: "Контроль вичитки" },
+  { path: "/7", name: "Розклад" },
 ]
 
 const Header: React.FC = () => {
@@ -26,15 +25,18 @@ const Header: React.FC = () => {
   return (
     <header
       className={cn(styles.header, {
-        [styles.light]: colorMode === 'light',
-        [styles.dark]: colorMode === 'dark',
+        [styles.light]: colorMode === "light",
+        [styles.dark]: colorMode === "dark",
       })}
     >
-      <div className={styles['header-left']}>Timetable</div>
-      <ul className={styles['header-menu']}>
+      <div className={styles["header-left"]}>Timetable</div>
+      <ul className={styles["header-menu"]}>
         {pages.map((el) => (
           <li key={el.name}>
-            <NavLink to={el.path} className={({ isActive }) => (isActive ? styles['active-page'] : '')}>
+            <NavLink
+              to={el.path}
+              className={({ isActive }) => (isActive ? styles["active-page"] : "")}
+            >
               {el.name}
             </NavLink>
           </li>
@@ -43,9 +45,9 @@ const Header: React.FC = () => {
         {/* <li>Звіти</li> */}
         {/* <li>Налаштування</li> */}
       </ul>
-      <div className={styles['header-right']}>
+      <div className={styles["header-right"]}>
         <SwitchColorMode />
-        <IconButton sx={{ marginLeft: '20px' }} bg="dark">
+        <IconButton sx={{ marginLeft: "20px" }} bg="dark">
           <AccountIcon size={24} />
         </IconButton>
       </div>

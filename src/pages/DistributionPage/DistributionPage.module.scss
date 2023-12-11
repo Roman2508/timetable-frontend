@@ -1,0 +1,54 @@
+.container {
+  margin: 0 auto;
+  max-width: 1850px;
+  padding: 20px 20px 0;
+
+  display: flex;
+  align-items: flex-start;
+}
+
+.col {
+  position: relative;
+  width: 33.3333333% !important;
+
+  & + .col {
+    margin-left: 20px;
+  }
+}
+
+.left-col {
+  padding: 20px 0;
+}
+
+.empty-box {
+  margin: 40px 0 0;
+  text-align: center;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.empty-image {
+  width: 100%;
+  max-width: 150px;
+  margin-bottom: 10px;
+}
+
+.filter-icon {
+  right: 16px;
+  top: 13px;
+  position: absolute;
+}
+
+.distributed-actions {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.subject-row {
+  gap: 20px;
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+}

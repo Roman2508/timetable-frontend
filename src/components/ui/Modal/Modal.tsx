@@ -11,10 +11,11 @@ interface IModalProps {
   setIsShow: React.Dispatch<React.SetStateAction<boolean>>
   children: JSX.Element | JSX.Element[] | string
   ref: any
+  classNames?: string
 }
 
 const Modal = React.forwardRef<React.FC, React.PropsWithChildren<IModalProps>>(
-  ({ children, isShow, setIsShow, modalTitle }, ref) => {
+  ({ children, isShow, setIsShow, modalTitle, classNames = '' }, ref) => {
     const { colorMode } = React.useContext(ThemeContext)
 
     // disable scroll on open modal
@@ -43,19 +44,29 @@ const Modal = React.forwardRef<React.FC, React.PropsWithChildren<IModalProps>>(
                 [styles.closeModal]: !isShow,
               })}
               //@ts-ignore
-              ref={ref}>
+              ref={ref}
+            >
               <div className={styles.modalTop}>
-                <h5>{modalTitle}</h5>
+                <h5
+                  style={{
+                    whiteSpace: 'nowrap',
+                    maxWidth: '90%',
+                    textOverflow: 'ellipsis',
+                    overflow: 'hidden',
+                  }}
+                >
+                  {modalTitle}
+                </h5>
                 <MdClose className={styles.closeIcon} onClick={() => setIsShow(false)} size={30} />
               </div>
-              {children}
+              <div className={classNames}>{children}</div>
             </div>
           </div>
         </div>
         {/* )} */}
       </>
     )
-  },
+  }
 )
 
 export default Modal

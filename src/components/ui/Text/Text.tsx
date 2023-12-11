@@ -7,7 +7,8 @@ interface ITitleProps {
   Variant?: 'p' | 'span'
   color?: 'black' | 'white' | 'gray' | 'green'
   align?: 'left' | 'right' | 'center' | 'justify'
-  additionalStyles?: React.CSSProperties
+  sx?: React.CSSProperties
+  classNames?: string
   children: string
 }
 
@@ -24,7 +25,8 @@ const Text: React.FC<React.PropsWithChildren<ITitleProps>> = ({
   color = 'black',
   align = 'left',
   size = '20px',
-  additionalStyles = {},
+  classNames = '',
+  sx = {},
 }) => {
   const { colorMode } = React.useContext(ThemeContext)
 
@@ -50,7 +52,10 @@ const Text: React.FC<React.PropsWithChildren<ITitleProps>> = ({
 
   return (
     <div className={styles.textWrapper}>
-      <Variant style={{ color: textColors[titleColor], fontSize: size, textAlign: align, ...additionalStyles }}>
+      <Variant
+        style={{ color: textColors[titleColor], fontSize: size, textAlign: align, ...sx }}
+        className={classNames}
+      >
         {children}
       </Variant>
     </div>

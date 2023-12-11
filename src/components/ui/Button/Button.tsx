@@ -1,45 +1,45 @@
-import React from "react"
-import cn from "classnames"
+import React from 'react'
+import cn from 'classnames'
 
-import styles from "./Button.module.scss"
-import { ThemeContext } from "../../../App"
+import styles from './Button.module.scss'
+import { ThemeContext } from '../../../App'
 
 const colors = {
   blue: {
-    bg: "#087EA4",
-    text: "#ffffff",
+    bg: '#087EA4',
+    text: '#ffffff',
   },
   green: {
-    bg: "#20bd5f",
-    text: "#ffffff",
+    bg: '#20bd5f',
+    text: '#ffffff',
   },
   // green: {
   //   bg: '#4FC488',
   //   text: '#ffffff',
   // },
   pink: {
-    bg: "#DB7BA9",
-    text: "#ffffff",
+    bg: '#DB7BA9',
+    text: '#ffffff',
   },
   red: {
-    bg: "#CA4240",
-    text: "#ffffff",
+    bg: '#CA4240',
+    text: '#ffffff',
   },
   violet: {
-    bg: "#B269F6",
-    text: "#ffffff",
+    bg: '#B269F6',
+    text: '#ffffff',
   },
   gray: {
-    bg: "#acaec9",
-    text: "#000000",
+    bg: '#acaec9',
+    text: '#000000',
   },
   white: {
-    bg: "#fafafa",
-    text: "#000000",
+    bg: '#fafafa',
+    text: '#000000',
   },
   black: {
-    bg: "#161B24",
-    text: "#ffffff",
+    bg: '#161B24',
+    text: '#ffffff',
   },
 }
 
@@ -55,46 +55,50 @@ const colors = {
 interface IButtonProps {
   children: string
   color?: keyof typeof colors
-  variant?: "filled" | "outlined" | "text"
+  variant?: 'filled' | 'outlined' | 'text'
   classNames?: [string]
   sx?: React.CSSProperties
   disabled?: boolean
+  onClick?: () => void
+  [propsName: string]: any
 }
 
 const Button: React.FC<React.PropsWithChildren<IButtonProps>> = ({
-  children = "",
-  color = "green",
-  variant = "filled",
+  children = '',
+  color = 'green',
+  variant = 'filled',
   disabled = false,
   classNames = [],
+  onClick = () => {},
   sx = {},
+  ...props
 }) => {
   const { colorMode } = React.useContext(ThemeContext)
 
   const [isHover, setIsHover] = React.useState(false)
 
-  if (color === "black" && colorMode === "dark") {
-    color = "white"
-  } else if (color === "white" && colorMode === "light") {
-    color = "black"
+  if (color === 'black' && colorMode === 'dark') {
+    color = 'white'
+  } else if (color === 'white' && colorMode === 'light') {
+    color = 'black'
   }
 
   const buttonStyles =
-    variant === "filled"
+    variant === 'filled'
       ? {
           color: colors[color].text,
           backgroundColor: colors[color].bg,
         }
-      : variant === "outlined"
+      : variant === 'outlined'
       ? {
           color: colors[color].bg,
           border: `1px solid ${colors[color].bg}`,
-          backgroundColor: isHover ? `${colors[color].bg}31` : "transparent",
+          backgroundColor: isHover ? `${colors[color].bg}31` : 'transparent',
         }
       : {
           color: colors[color].bg,
           border: 0,
-          backgroundColor: isHover ? `${colors[color].bg}31` : "transparent",
+          backgroundColor: isHover ? `${colors[color].bg}31` : 'transparent',
         }
 
   return (
@@ -104,6 +108,8 @@ const Button: React.FC<React.PropsWithChildren<IButtonProps>> = ({
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
       disabled={disabled}
+      onClick={onClick}
+      {...props}
     >
       {children}
     </button>

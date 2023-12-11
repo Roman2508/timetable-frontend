@@ -6,6 +6,7 @@ import GroupPage from './pages/GroupPage/GroupPage'
 import AllGroupsPage from './pages/AllGroupsPage/AllGroupsPage'
 import PlansPage from './pages/PlansPage/PlansPage'
 import PlanPage from './pages/PlanPage/PlanPage'
+import { TeachersPage } from './pages/TeachersPage/TeachersPage'
 
 export const ThemeContext = React.createContext({
   colorMode: 'light',
@@ -39,12 +40,12 @@ const App = () => {
           <Route path="/" element={<AllGroupsPage />} />
           <Route path="/group/:id" element={<GroupPage />} />
 
-          <Route path="/2" element={<div>asdadssd11111</div>} />
+          <Route path="/1" element={<div>asdadssd11111</div>} />
 
           <Route path="/plans" element={<PlansPage />} />
           <Route path="/plan/:id" element={<PlanPage />} />
 
-          <Route path="/3" element={<div>asdadssd11111</div>} />
+          <Route path="/teachers" element={<TeachersPage />} />
           <Route path="/4" element={<div>asdadssd11111</div>} />
           <Route path="/5" element={<div>asdadssd11111</div>} />
           <Route path="/6" element={<div>asdadssd11111</div>} />

@@ -10,7 +10,8 @@
 
 .select-menu-dark div {
   color: #fff !important;
-  background-color: #23272f;
+  // background-color: #23272f;
+  background-color: transparent;
 
   &[aria-selected='false']:hover {
     background-color: lighten($color: #343a46, $amount: 5%) !important;

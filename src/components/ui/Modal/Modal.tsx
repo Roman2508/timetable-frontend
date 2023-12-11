@@ -3,7 +3,7 @@ import styles from './Modal.module.scss'
 import cn from 'classnames'
 
 import { MdClose } from 'react-icons/md'
-import { ThemeContext } from '@/app/layout'
+import { ThemeContext } from '../../../App'
 
 interface IModalProps {
   isShow: boolean

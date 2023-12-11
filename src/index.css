@@ -1,4 +1,4 @@
-@import "./assets/fonts/font.css";
+@import './assets/fonts/font.css';
 
 :root {
   --primary-color: #20bd5f;
@@ -17,11 +17,13 @@ html,
 body,
 #root {
   height: 100%;
+  min-height: 100%;
   overflow-x: hidden;
+  /* overflow: hidden; */
 }
 
 * {
-  font-family: "Gilroy", "Roboto", "sans-serif";
+  font-family: 'Gilroy', 'Roboto', 'sans-serif';
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -35,17 +37,26 @@ body,
 }
 
 .dark-theme {
-  background-color: #23272f;
+  background-color: var(--dark-color);
   color: #fafafa;
   min-height: 100vh;
   min-height: 100%;
 }
 
 .light-theme {
-  background-color: #f4f4f4;
+  background-color: var(--white-color);
   color: #00272f;
   min-height: 100vh;
   min-height: 100%;
+}
+
+body[color='light'] {
+  background-color: var(--white-color);
+  color: #00272f;
+}
+body[color='dark'] {
+  background-color: var(--dark-color);
+  color: #fafafa;
 }
 
 .app-container {
@@ -55,7 +66,7 @@ body,
 }
 
 ::-webkit-scrollbar {
-  background-color: #f4f4f4;
+  background-color: var(--white-color);
   width: 8px;
 }
 

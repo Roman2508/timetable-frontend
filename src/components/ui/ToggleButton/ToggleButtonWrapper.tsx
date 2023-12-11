@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './ToggleButton.module.scss'
 import cn from 'classnames'
-import { ThemeContext } from '@/app/layout'
+import { ThemeContext } from '../../../App'
 
 interface IToggleButtonWrapperProps {
   children: JSX.Element | JSX.Element[] | string
@@ -19,7 +19,8 @@ const ToggleButtonWrapper: React.FC<React.PropsWithChildren<IToggleButtonWrapper
       className={cn(styles.wrapper, ...classNames, {
         [styles['wrapper-dark']]: colorMode === 'dark',
         [styles['wrapper-light']]: colorMode === 'light',
-      })}>
+      })}
+    >
       {children}
     </div>
   )

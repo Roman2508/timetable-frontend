@@ -1,85 +1,148 @@
-import React from "react"
-import cn from "classnames"
-import { IoIosArrowDown as ArrowDown } from "react-icons/io"
-import { MdDeleteOutline as DeleteIcon } from "react-icons/md"
-import { MdDriveFileRenameOutline as RenameIcon } from "react-icons/md"
+import React from 'react'
+import cn from 'classnames'
+import { IoIosArrowDown as ArrowDown } from 'react-icons/io'
+import { MdDeleteOutline as DeleteIcon } from 'react-icons/md'
+import { MdDriveFileRenameOutline as RenameIcon } from 'react-icons/md'
 
-import { ThemeContext } from "../../App"
-import styles from "./PlansPage.module.scss"
-import Title from "../../components/ui/Title/Title"
-import Paper from "../../components/ui/Paper/Paper"
-import IconButton from "../../components/ui/IconButton/IconButton"
-import { NavLink } from "react-router-dom"
+import { ThemeContext } from '../../App'
+import styles from './PlansPage.module.scss'
+import Title from '../../components/ui/Title/Title'
+import Paper from '../../components/ui/Paper/Paper'
+import IconButton from '../../components/ui/IconButton/IconButton'
+import { NavLink } from 'react-router-dom'
 
 const plans = [
   {
     id: 1,
-    name: "Менеджмент",
-    createdAt: "08.12.23",
+    name: 'Менеджмент 1',
+    createdAt: '08.12.23',
     plans: [
-      { id: 1, name: "Фармація, промислова фармація, Фаховий молодший бакалавр" },
-      { id: 1, name: "Фармація, промислова фармація" },
-      { id: 1, name: "Фармація, промислова фармація" },
+      { id: 1, name: 'Фармація, промислова фармація, Фаховий молодший бакалавр' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація, Фаховий молодший бакалавр' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація, Фаховий молодший бакалавр' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація, Фаховий молодший бакалавр' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація' },
     ],
   },
   {
     id: 2,
-    name: "Фармація, промислова фармація",
-    createdAt: "08.12.23",
+    name: 'Фармація, промислова фармація 2',
+    createdAt: '08.12.23',
     plans: [
-      { id: 1, name: "Фармація, промислова фармація" },
-      { id: 1, name: "Фармація, промислова фармація" },
-      { id: 1, name: "Фармація, промислова фармація" },
+      { id: 1, name: 'Фармація, промислова фармація, Фаховий молодший бакалавр' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація, Фаховий молодший бакалавр' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація, Фаховий молодший бакалавр' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація, Фаховий молодший бакалавр' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація' },
     ],
   },
   {
     id: 3,
-    name: "Технології медичної діагностики та лікування",
-    createdAt: "08.12.23",
+    name: 'Технології медичної діагностики та лікування 3',
+    createdAt: '08.12.23',
     plans: [
-      { id: 1, name: "Фармація, промислова фармація" },
-      { id: 1, name: "Фармація, промислова фармація" },
-      { id: 1, name: "Фармація, промислова фармація" },
+      { id: 1, name: 'Фармація, промислова фармація, Фаховий молодший бакалавр' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація, Фаховий молодший бакалавр' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація, Фаховий молодший бакалавр' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація, Фаховий молодший бакалавр' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація' },
     ],
   },
   {
     id: 4,
-    name: "Фармація, промислова фармація (заочна форма)",
-    createdAt: "08.12.23",
+    name: 'Фармація, промислова фармація (заочна форма) 4',
+    createdAt: '08.12.23',
     plans: [
-      { id: 1, name: "Фармація, промислова фармація" },
-      { id: 1, name: "Фармація, промислова фармація" },
-      { id: 1, name: "Фармація, промислова фармація" },
+      { id: 1, name: 'Фармація, промислова фармація, Фаховий молодший бакалавр' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація, Фаховий молодший бакалавр' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація, Фаховий молодший бакалавр' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація, Фаховий молодший бакалавр' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація' },
     ],
   },
   {
     id: 5,
-    name: "Технології медичної діагностики та лікування",
-    createdAt: "08.12.23",
+    name: 'Технології медичної діагностики та лікування 5',
+    createdAt: '08.12.23',
     plans: [
-      { id: 1, name: "Фармація, промислова фармація" },
-      { id: 1, name: "Фармація, промислова фармація" },
-      { id: 1, name: "Фармація, промислова фармація" },
+      { id: 1, name: 'Фармація, промислова фармація, Фаховий молодший бакалавр' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація, Фаховий молодший бакалавр' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація, Фаховий молодший бакалавр' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація, Фаховий молодший бакалавр' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація' },
     ],
   },
   {
     id: 6,
-    name: "Фармація, промислова фармація",
-    createdAt: "08.12.23",
+    name: 'Фармація, промислова фармація 6',
+    createdAt: '08.12.23',
     plans: [
-      { id: 1, name: "Фармація, промислова фармація" },
-      { id: 1, name: "Фармація, промислова фармація" },
-      { id: 1, name: "Фармація, промислова фармація" },
+      { id: 1, name: 'Фармація, промислова фармація, Фаховий молодший бакалавр' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація, Фаховий молодший бакалавр' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація, Фаховий молодший бакалавр' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація, Фаховий молодший бакалавр' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація' },
     ],
   },
   {
     id: 7,
-    name: "Менеджмент",
-    createdAt: "08.12.23",
+    name: 'Менеджмент 7',
+    createdAt: '08.12.23',
     plans: [
-      { id: 1, name: "Фармація, промислова фармація" },
-      { id: 1, name: "Фармація, промислова фармація" },
-      { id: 1, name: "Фармація, промислова фармація" },
+      { id: 1, name: 'Фармація, промислова фармація, Фаховий молодший бакалавр' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація, Фаховий молодший бакалавр' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація, Фаховий молодший бакалавр' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація, Фаховий молодший бакалавр' },
+      { id: 1, name: 'Фармація, промислова фармація' },
+      { id: 1, name: 'Фармація, промислова фармація' },
     ],
   },
 ]
@@ -103,56 +166,51 @@ const PlansPage = () => {
 
   return (
     <div className={styles.container}>
-      <Title sx={{ marginBottom: "20px" }}>Навчальні плани</Title>
+      <Title sx={{ marginBottom: '20px' }}>Навчальні плани</Title>
 
-      <div className={styles["plans-wrapper"]}>
+      <div className={styles['plans-wrapper']}>
         {plans.map((el) => (
           <Paper
-            classNames={cn(styles["plan-category"], {
-              [styles["open"]]: el.id === openCategory?.id,
-              [styles["light"]]: colorMode === "light",
+            classNames={cn(styles['plan-category'], {
+              [styles['open']]: el.id === openCategory?.id,
+              [styles['light']]: colorMode === 'light',
             })}
             key={el.id}
           >
             <>
-              <div className={styles["plan-category-controls"]}>
-                <div className={styles["plan-top"]}>
-                  <Title Variant="h6" align="left" sx={{ lineHeight: "1.25" }}>
+              <div className={styles['plan-category-controls']}>
+                <div className={styles['plan-top']}>
+                  <Title Variant="h6" align="left" classNames={styles['plan-category-name']}>
                     {el.name}
                   </Title>
 
-                  <IconButton
-                    sx={{ marginLeft: "10px" }}
-                    onClick={() => handleChangeOpenCategory(el.id)}
-                  >
-                    <ArrowDown
-                      style={openCategory?.id === el.id ? { transform: "rotate(180deg)" } : {}}
-                    />
+                  <IconButton sx={{ marginLeft: '10px' }} onClick={() => handleChangeOpenCategory(el.id)}>
+                    <ArrowDown style={openCategory?.id === el.id ? { transform: 'rotate(180deg)' } : {}} />
                   </IconButton>
                 </div>
-                <div className={styles["plan-category-actions"]}>
-                  <div className={styles["plan-category-actions-item"]}>Оновити</div>
-                  <div className={styles["plan-category-actions-item"]}>Видалити</div>
-                  <div className={styles["plan-category-actions-item"]}>Додати</div>
+                <div className={styles['plan-category-actions']}>
+                  <div className={styles['plan-category-actions-item']}>Оновити</div>
+                  <div className={styles['plan-category-actions-item']}>Видалити</div>
+                  <div className={styles['plan-category-actions-item']}>Додати</div>
                 </div>
               </div>
 
               {openCategory?.id === el.id && (
                 <div
-                  className={cn(styles["plans"], {
-                    [styles["light"]]: colorMode === "light",
+                  className={cn(styles['plans'], {
+                    [styles['light']]: colorMode === 'light',
                   })}
                 >
                   {el.plans.map((plan) => (
-                    <div className={styles["plan"]} key={plan.id}>
-                      <NavLink className={styles["plan-name"]} to={`/plan/${plan.id}`}>
+                    <div className={styles['plan']} key={plan.id}>
+                      <NavLink className={styles['plan-name']} to={`/plan/${plan.id}`}>
                         {plan.name}
                       </NavLink>
 
-                      <div className={styles["plan-controls"]}>
+                      <div className={styles['plan-controls']}>
                         <IconButton
                           sx={{
-                            marginRight: "10px",
+                            marginRight: '10px',
                           }}
                         >
                           <RenameIcon size={20} />

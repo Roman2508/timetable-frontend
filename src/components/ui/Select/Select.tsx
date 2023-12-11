@@ -1,26 +1,28 @@
-import React from "react"
-import cn from "classnames"
-import Select, { OptionProps } from "react-select"
+import React from 'react'
+import cn from 'classnames'
+import Select, { OptionProps } from 'react-select'
 
-import "./Select.scss"
-import styles from "./Select.module.scss"
-import { ThemeContext } from "../../../App"
+import './Select.scss'
+import styles from './Select.module.scss'
+import { ThemeContext } from '../../../App'
 
 interface ISelectComponentProps {
-  labelBgColor?: "light" | "dark"
+  labelBgColor?: 'light' | 'dark'
   label?: string
   options?: { value: string; label: string }[]
   onChange?: (e: any) => void
-  selectValue?: { value: string; label: string } | null
+  multi?: boolean
+  selectValue?: { value: string; label: string } | { value: string; label: string }[] | null
   [propName: string]: any
 }
 
 const SelectComponent: React.FC<ISelectComponentProps> = ({
-  labelBgColor = "light",
+  labelBgColor = 'light',
   options = [],
   onChange = (e: any) => {},
   selectValue = null,
-  width = "auto",
+  width = 'auto',
+  multi = false,
   label = null,
   ...props
 }) => {
@@ -30,8 +32,8 @@ const SelectComponent: React.FC<ISelectComponentProps> = ({
 
   return (
     <div
-      className={cn(styles["select-wrapper"], {
-        ["select-menu-dark"]: colorMode === "dark",
+      className={cn(styles['select-wrapper'], {
+        ['select-menu-dark']: colorMode === 'dark',
       })}
     >
       {label && (
@@ -39,10 +41,10 @@ const SelectComponent: React.FC<ISelectComponentProps> = ({
           className={cn(styles.label, {
             [styles.focused]: isFocused,
             [styles.notEmpty]: selectValue || props?.value,
-            [styles["labelLight"]]: labelBgColor === "light",
-            [styles["labelDark"]]: labelBgColor === "dark",
-            [styles["light"]]: colorMode === "light",
-            [styles["dark"]]: colorMode === "dark",
+            [styles['labelLight']]: labelBgColor === 'light',
+            [styles['labelDark']]: labelBgColor === 'dark',
+            [styles['light']]: colorMode === 'light',
+            [styles['dark']]: colorMode === 'dark',
           })}
         >
           {label}
@@ -62,15 +64,16 @@ const SelectComponent: React.FC<ISelectComponentProps> = ({
         placeholder=""
         isSearchable={false}
         // menuIsOpen
+        isMulti={multi}
         classNames={{
           control: (state) => {
             setIsFocused(state.isFocused)
 
             return cn({
               [styles.select]: true,
-              [styles["focused"]]: state.isFocused,
-              [styles["light"]]: colorMode === "light",
-              [styles["dark"]]: colorMode === "dark",
+              [styles['focused']]: state.isFocused,
+              [styles['light']]: colorMode === 'light',
+              [styles['dark']]: colorMode === 'dark',
             })
           },
         }}
@@ -90,7 +93,7 @@ const CustomOption = (props: OptionProps) => {
     <div
       ref={innerRef}
       {...innerProps}
-      className={cn(styles["select-item"], { [styles.selected]: innerProps["aria-selected"] })}
+      className={cn(styles['select-item'], { [styles.selected]: innerProps['aria-selected'] })}
     >
       {children}
     </div>

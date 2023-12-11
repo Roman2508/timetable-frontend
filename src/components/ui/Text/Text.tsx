@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from './Text.module.scss'
-import { ThemeContext } from '@/app/layout'
+import { ThemeContext } from '../../../App'
 
 interface ITitleProps {
   size?: string

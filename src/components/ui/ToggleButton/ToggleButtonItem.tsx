@@ -1,6 +1,6 @@
 import React from 'react'
 import cn from 'classnames'
-import { ThemeContext } from '@/app/layout'
+import { ThemeContext } from '../../../App'
 
 import styles from './ToggleButton.module.scss'
 

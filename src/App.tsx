@@ -1,31 +1,33 @@
-import React from "react"
-import { Routes, Route } from "react-router-dom"
+import React from 'react'
+import { Routes, Route } from 'react-router-dom'
 
-import Layout from "./components/Layout/Layout"
-import GroupPage from "./pages/GroupPage/GroupPage"
-import AllGroupsPage from "./pages/AllGroupsPage/AllGroupsPage"
-import PlansPage from "./pages/PlansPage/PlansPage"
-import PlanPage from "./pages/PlanPage/PlanPage"
+import Layout from './components/Layout/Layout'
+import GroupPage from './pages/GroupPage/GroupPage'
+import AllGroupsPage from './pages/AllGroupsPage/AllGroupsPage'
+import PlansPage from './pages/PlansPage/PlansPage'
+import PlanPage from './pages/PlanPage/PlanPage'
 
 export const ThemeContext = React.createContext({
-  colorMode: "light",
+  colorMode: 'light',
   changeColorMode: () => {},
 })
 
 const App = () => {
-  const [colorMode, setColorMode] = React.useState<"light" | "dark">("light")
+  const [colorMode, setColorMode] = React.useState<'light' | 'dark'>('light')
 
   React.useEffect(() => {
-    const currentColorMode = window.localStorage.getItem("colorMode") as "light" | "dark" | null
+    const currentColorMode = window.localStorage.getItem('colorMode') as 'light' | 'dark' | null
     if (currentColorMode) {
       setColorMode(currentColorMode)
+      document.body.setAttribute('color', currentColorMode)
     }
   }, [])
 
   const changeColorMode = () => {
     setColorMode((prev) => {
-      const currentMode = prev === "light" ? "dark" : "light"
-      window.localStorage.setItem("colorMode", currentMode)
+      const currentMode = prev === 'light' ? 'dark' : 'light'
+      window.localStorage.setItem('colorMode', currentMode)
+      document.body.setAttribute('color', currentMode)
       return currentMode
     })
   }

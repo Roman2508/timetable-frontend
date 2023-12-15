@@ -1,25 +1,33 @@
-import React from 'react'
-import cn from 'classnames'
+import React from "react"
+import cn from "classnames"
 
-import styles from './Table.module.scss'
-import { ThemeContext } from '../../../App'
+import styles from "./Table.module.scss"
+import { ThemeContext } from "../../../App"
 
 interface IProps {
   children: JSX.Element | JSX.Element[] | string | string[]
-  align?: 'left' | 'center' | 'right'
+  align?: "left" | "center" | "right"
   isHover?: boolean
   sx?: React.CSSProperties
+  classNames?: string
   [propName: string]: any
 }
 
-const TableBodyCell: React.FC<IProps> = ({ children, align = 'center', isHover = false, sx = {}, ...props }) => {
+const TableBodyCell: React.FC<IProps> = ({
+  children,
+  classNames = "",
+  align = "center",
+  isHover = false,
+  sx = {},
+  ...props
+}) => {
   const { colorMode } = React.useContext(ThemeContext)
 
   return (
     <td
-      className={cn(styles.tableCell, styles.cell, {
+      className={cn(styles.tableCell, styles.cell, classNames, {
         [styles.hover]: isHover,
-        [styles.dark]: colorMode === 'dark',
+        [styles.dark]: colorMode === "dark",
       })}
       style={{ textAlign: align, ...sx }}
       {...props}

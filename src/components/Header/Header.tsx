@@ -12,11 +12,12 @@ const pages = [
   { path: "/", name: "Групи" },
   { path: "/distribution", name: "Розподіл" },
   { path: "/plans", name: "Плани" },
+  { path: "/streams", name: "Потоки" },
   { path: "/teachers", name: "Викладачі" },
   { path: "/auditories", name: "Аудиторії" },
   { path: "/5", name: "Навантаження" },
   { path: "/6", name: "Контроль вичитки" },
-  { path: "/7", name: "Розклад" },
+  { path: "/timetable", name: "Розклад" },
 ]
 
 const Header: React.FC = () => {

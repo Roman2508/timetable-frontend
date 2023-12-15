@@ -1,0 +1,40 @@
+.container {
+  max-width: 1840px;
+  padding: 20px 0 40px;
+  margin: 0 auto;
+
+  display: flex;
+  align-items: flex-start;
+}
+
+.left-col {
+  width: 30%;
+  margin-right: 10px;
+}
+
+.right-col {
+  width: 70%;
+}
+
+.top-row {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.streams-list-wrapper {
+  width: calc(50% - 5px) !important;
+  margin-right: 10px;
+  height: 210px;
+  padding: 20px 0;
+}
+
+.streams-list {
+  overflow-x: auto;
+  height: 159px;
+}
+
+.stream-groups-wrapper {
+  width: calc(50% - 5px) !important;
+  height: 210px;
+  padding: 20px 0;
+}

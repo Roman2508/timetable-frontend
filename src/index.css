@@ -1,4 +1,4 @@
-@import './assets/fonts/font.css';
+@import "./assets/fonts/font.css";
 
 :root {
   --primary-color: #20bd5f;
@@ -23,7 +23,7 @@ body,
 }
 
 * {
-  font-family: 'Gilroy', 'Roboto', 'sans-serif';
+  font-family: "Gilroy", "Roboto", "sans-serif";
   /* font-family: 'IBM Plex Mono', monospace; */
   margin: 0;
   padding: 0;
@@ -51,11 +51,11 @@ body,
   min-height: 100%;
 }
 
-body[color='light'] {
+body[color="light"] {
   background-color: var(--white-color);
   color: #00272f;
 }
-body[color='dark'] {
+body[color="dark"] {
   background-color: var(--dark-color);
   color: #fafafa;
 }
@@ -73,5 +73,5 @@ body[color='dark'] {
 
 ::-webkit-scrollbar-thumb {
   background-color: #414857;
-  border-radius: 3px;
+  /* border-radius: 3px; */
 }

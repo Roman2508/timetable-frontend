@@ -3,7 +3,7 @@
   padding: 5px;
   display: inline-flex;
   align-items: center;
-  border-radius: 20px;
+  border-radius: 6px;
   z-index: 1;
 }
 
@@ -18,19 +18,21 @@
   white-space: nowrap;
   cursor: pointer;
   padding: 10px 30px;
-  border-radius: 20px;
+  border-radius: 6px;
   text-align: center;
   // width: calc(100% / 3);
 }
 
 .active-dark {
   transition: all 0.3s ease-in-out;
-  background-color: #1c1c1c;
+  // background-color: #1c1c1c;
+  background-color: #3f4655;
 }
 
 .active-light {
   transition: all 0.3s ease-in-out;
-  background-color: #919191;
+  // background-color: #919191;
+  background-color: #3f4655;
   color: #fff;
 }
 

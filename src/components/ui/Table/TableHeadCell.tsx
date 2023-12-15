@@ -10,6 +10,7 @@ interface IProps {
   showControls?: boolean
   align?: "left" | "center" | "right"
   sx?: React.CSSProperties
+  classNames?: string
   [propName: string]: any
 }
 
@@ -19,11 +20,12 @@ const TableHeadCell: React.FC<IProps> = ({
   align = "center",
   sx = {},
   showControls = false,
+  classNames = "",
   ...props
 }) => {
   return (
     <th
-      className={cn(styles.tableHeadCell, styles.cell, {
+      className={cn(styles.tableHeadCell, styles.cell, classNames, {
         [styles.controls]: showControls,
       })}
       style={{ textAlign: align, ...sx }}

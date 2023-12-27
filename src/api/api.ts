@@ -7,16 +7,24 @@ const instanse = axios.create({
 })
 
 // Якщо є токен, вшиваю його в конфігурацію axios
-// instanse.interceptors.request.use((config) => {
-//   if (config.headers) {
-//     config.headers.Authorization = String(globalThis.localStorage.getItem('token'))
+// @ts-ignore
+instanse.interceptors.request.use((config) => {
+  if (config.headers) {
+    config.headers.Authorization = String(
+      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAzNjgwMjI5LCJleHAiOjE3MDYyNzIyMjl9.Qmd-W74a1o08Ft5KicmoCfuai6D2XUPSmlfFv29aPOg'
+    )
+    // config.headers.Authorization = String(globalThis.localStorage.getItem('token'))
 
-//     return config
-//   }
-// })
+    return config
+  }
+})
 
 export const auditoriesAPI = {
-  getAllCategories(id: number) {
-    return instanse.get<AuditoryCategoriesTypes[]>(`/auditory-categories/${id}`)
+  getAuditoryCategories() {
+    return instanse.get<AuditoryCategoriesTypes[]>('/auditory-categories')
+  },
+
+  createAuditoryCategory(name: string) {
+    return instanse.post<AuditoryCategoriesTypes>('/auditory-categories', { name })
   },
 }

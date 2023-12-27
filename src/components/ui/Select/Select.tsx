@@ -12,6 +12,8 @@ interface ISelectComponentProps {
   options?: { value: string; label: string }[]
   onChange?: (e: any) => void
   multi?: boolean
+  width?: string
+  customClassNames?: string
   selectValue?: { value: string; label: string } | { value: string; label: string }[] | null
   [propName: string]: any
 }
@@ -23,6 +25,7 @@ const SelectComponent: React.FC<ISelectComponentProps> = ({
   selectValue = null,
   width = 'auto',
   multi = false,
+  customClassNames = '',
   label = null,
   ...props
 }) => {
@@ -53,7 +56,7 @@ const SelectComponent: React.FC<ISelectComponentProps> = ({
 
       <Select
         styles={{
-          control: (baseStyles /*,  state */) => ({
+          control: (baseStyles) => ({
             ...baseStyles,
             width,
           }),
@@ -69,12 +72,15 @@ const SelectComponent: React.FC<ISelectComponentProps> = ({
           control: (state) => {
             setIsFocused(state.isFocused)
 
-            return cn({
-              [styles.select]: true,
-              [styles['focused']]: state.isFocused,
-              [styles['light']]: colorMode === 'light',
-              [styles['dark']]: colorMode === 'dark',
-            })
+            return cn(
+              {
+                [styles.select]: true,
+                [styles['focused']]: state.isFocused,
+                [styles['light']]: colorMode === 'light',
+                [styles['dark']]: colorMode === 'dark',
+              },
+              customClassNames
+            )
           },
         }}
         /* @ts-ignore */

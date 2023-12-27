@@ -1,7 +1,8 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { AuditoryCategoriesTypes, AuditoriesInitialState } from './auditoriesTypes'
 import { LoadingStatusTypes } from '../appTypes'
-import { getAuditoryCategories } from './auditoriesAsyncActions'
+import { createAuditoryCategory, getAuditoryCategories } from './auditoriesAsyncActions'
+import { RootState } from '../store'
 
 const auditoriesInitialState: AuditoriesInitialState = {
   auditoriCategories: null,
@@ -26,8 +27,20 @@ const auditoriesSlice = createSlice({
     })
 
     /*  */
+    builder.addCase(createAuditoryCategory.pending, (state) => {
+      state.loadingStatus = LoadingStatusTypes.LOADING
+    })
+    builder.addCase(createAuditoryCategory.rejected, (state) => {
+      state.loadingStatus = LoadingStatusTypes.ERROR
+    })
+    builder.addCase(createAuditoryCategory.fulfilled, (state, action: PayloadAction<AuditoryCategoriesTypes>) => {
+      state.auditoriCategories?.push(action.payload)
+      state.loadingStatus = LoadingStatusTypes.SUCCESS
+    })
   },
 })
+
+export const auditoriesSelector = (state: RootState) => state.auditories
 
 export default auditoriesSlice.reducer
 

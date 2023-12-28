@@ -25,7 +25,7 @@
   }
 
   &::before {
-    content: "" !important;
+    content: '' !important;
     position: absolute !important;
   }
 
@@ -39,6 +39,13 @@
       border: 1px solid #20bd5f !important;
     }
   }
+
+  &.error,
+  &.error:hover,
+  &.focused.error,
+  &.focused.error:hover {
+    border: 1px solid var(--error-color) !important;
+  }
 }
 
 .label {
@@ -50,6 +57,10 @@
   transition: all 0.2s ease-in-out;
   z-index: 0;
 
+  &.error {
+    color: var(--error-color);
+  }
+
   &.focused,
   &.notEmpty {
     top: -1px;
@@ -59,7 +70,7 @@
     transition: all 0.2s ease-in-out;
 
     &::before {
-      content: "";
+      content: '';
       width: calc(100% + 7px);
       height: 4px;
       top: 45%;

@@ -15,4 +15,5 @@ export type AuditoriesTypes = {
   id: number
   name: string
   seatsNumber: number
+  category: { id: number }
 }

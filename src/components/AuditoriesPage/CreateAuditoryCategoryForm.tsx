@@ -6,6 +6,9 @@ import styles from './AuditoriesPage.module.scss'
 import { useAppDispatch } from '../../redux/store'
 import { LoadingStatusTypes } from '../../redux/appTypes'
 import { createAuditoryCategory } from '../../redux/auditories/auditoriesAsyncActions'
+import { Theme, toast } from 'react-toastify'
+import { useContext } from 'react'
+import { ThemeContext } from '../../App'
 
 interface ICreateAuditoryCategoryFormProps {
   loadingStatus: LoadingStatusTypes
@@ -28,15 +31,15 @@ const CreateAuditoryCategoryForm: React.FC<ICreateAuditoryCategoryFormProps> = (
     mode: 'onSubmit',
   })
 
-  const onSubmit: SubmitHandler<{ name: string }> = (data) => {
-    try {
-      console.log(data)
-      dispatch(createAuditoryCategory(data.name))
-    } catch (err) {
-      alert(err)
-    } finally {
-      resetField('name')
-    }
+  const onSubmit: SubmitHandler<{ name: string }> = async (data) => {
+    await dispatch(createAuditoryCategory(data.name))
+
+    onClearFields()
+    // toast.promise(dispatch(createAuditoryCategory(data.name)), {
+    //   pending: 'Завантаження...',
+    //   success: 'Додано нову категорію',
+    //   error: 'Помилка при створенні категорії',
+    // })
   }
 
   const onClearFields = () => {

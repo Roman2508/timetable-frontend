@@ -1,8 +1,13 @@
+import { CreateAuditoryPayloadType, UpdateAuditoryPayloadType } from './apiTypes'
 import axios from 'axios'
-import { AuditoryCategoriesTypes } from '../redux/auditories/auditoriesTypes'
+import { AuditoriesTypes, AuditoryCategoriesTypes } from '../redux/auditories/auditoriesTypes'
 
 const instanse = axios.create({
   baseURL: 'http://localhost:7777/',
+  // headers: {
+  //   ['Content-Type']: 'application/json',
+  //   responseType: 'json',
+  // },
   // baseURL: process.env.NODE_ENV === 'development' ? 'http://localhost:4444/' : 'https://timetable-server.onrender.com/',
 })
 
@@ -20,11 +25,26 @@ instanse.interceptors.request.use((config) => {
 })
 
 export const auditoriesAPI = {
+  /* categories */
   getAuditoryCategories() {
     return instanse.get<AuditoryCategoriesTypes[]>('/auditory-categories')
   },
 
   createAuditoryCategory(name: string) {
     return instanse.post<AuditoryCategoriesTypes>('/auditory-categories', { name })
+  },
+
+  updateAuditoryCategory(payload: UpdateAuditoryPayloadType) {
+    return instanse.patch<AuditoryCategoriesTypes>(`/auditory-categories/${payload.id}`, { name: payload.name })
+  },
+
+  async deleteAuditoryCategory(id: number) {
+    return instanse.delete<number>(`/auditory-categories/${id}`)
+  },
+
+  /* auditories */
+
+  createAuditory(payload: CreateAuditoryPayloadType) {
+    return instanse.post<AuditoriesTypes>('/auditories', payload)
   },
 }

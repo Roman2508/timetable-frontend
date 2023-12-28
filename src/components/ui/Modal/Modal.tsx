@@ -12,10 +12,11 @@ interface IModalProps {
   children: JSX.Element | JSX.Element[] | string
   ref: any
   classNames?: string
+  [propName: string]: any
 }
 
-const Modal = React.forwardRef<React.FC, React.PropsWithChildren<IModalProps>>(
-  ({ children, isShow, setIsShow, modalTitle, classNames = '' }, ref) => {
+const Modal = React.forwardRef<HTMLDivElement, React.PropsWithChildren<IModalProps>>(
+  ({ children, isShow, setIsShow, modalTitle, classNames = '', ...props }, ref) => {
     const { colorMode } = React.useContext(ThemeContext)
 
     // disable scroll on open modal

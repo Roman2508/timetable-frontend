@@ -1,36 +1,30 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
+
 import styles from './AuditoriesPage.module.scss'
+import { useAppDispatch } from '../../redux/store'
+import { useOutside } from '../../hooks/useOutside'
 import Paper from '../../components/ui/Paper/Paper'
 import Title from '../../components/ui/Title/Title'
-import Input from '../../components/ui/Input/Input'
-import Button from '../../components/ui/Button/Button'
 import ListItem from '../../components/ui/List/ListItem'
 import ListWrapper from '../../components/ui/List/ListWrapper'
 import { Accordion } from '../../components/ui/Accordion/Accordion'
-import { useAppDispatch } from '../../redux/store'
-import { getAuditoryCategories } from '../../redux/auditories/auditoriesAsyncActions'
-import { useSelector } from 'react-redux'
 import { auditoriesSelector } from '../../redux/auditories/auditoriesSlise'
-import SelectComponent from '../../components/ui/Select/Select'
+import CreateAuditoryForm from '../../components/AuditoriesPage/CreateAuditoryForm'
+import { getAuditoryCategories } from '../../redux/auditories/auditoriesAsyncActions'
 import CreateAuditoryCategoryForm from '../../components/AuditoriesPage/CreateAuditoryCategoryForm'
 import UpdateAuditoryCategoryModal from '../../components/AuditoriesPage/UpdateAuditoryCategoryModal'
-import CreateAuditoryForm from '../../components/AuditoriesPage/CreateAuditoryForm'
 
 export const AuditoriesPage = () => {
   const dispatch = useAppDispatch()
 
-  const [updateCategoryModalVisible, setUpdateCategoryModalVisible] = React.useState(false)
+  const { ref, isShow, setIsShow } = useOutside(false)
 
   const { auditoriCategories, loadingStatus } = useSelector(auditoriesSelector)
-  // const [auditoryCategories, setAuditoryCategories] = React.useState(null)
 
   React.useEffect(() => {
     const fetchData = async () => {
-      try {
-        await dispatch(getAuditoryCategories())
-      } catch (err) {
-        alert(err)
-      }
+      await dispatch(getAuditoryCategories())
     }
 
     fetchData()
@@ -39,9 +33,10 @@ export const AuditoriesPage = () => {
   return (
     <>
       <UpdateAuditoryCategoryModal
-        isShow={updateCategoryModalVisible}
+        ref={ref}
+        isShow={isShow}
         auditoriCategories={auditoriCategories}
-        setIsShow={setUpdateCategoryModalVisible}
+        setIsShow={setIsShow}
       />
 
       <div className={styles.contaner}>
@@ -51,17 +46,14 @@ export const AuditoriesPage = () => {
               ДОДАТИ НОВУ АУДИТОРІЮ
             </Title>
 
-            <CreateAuditoryForm auditoriCategories={auditoriCategories} />
+            <CreateAuditoryForm loadingStatus={loadingStatus} auditoriCategories={auditoriCategories} />
           </Paper>
           <Paper sx={{ marginBottom: '20px' }}>
             <Title align="center" Variant="h6" sx={{ marginBottom: '40px' }}>
               ДОДАТИ КАТЕГОРІЮ
             </Title>
 
-            <CreateAuditoryCategoryForm
-              loadingStatus={loadingStatus}
-              setUpdateCategoryModalVisible={setUpdateCategoryModalVisible}
-            />
+            <CreateAuditoryCategoryForm loadingStatus={loadingStatus} setUpdateCategoryModalVisible={setIsShow} />
           </Paper>
           {/*  */}
         </div>

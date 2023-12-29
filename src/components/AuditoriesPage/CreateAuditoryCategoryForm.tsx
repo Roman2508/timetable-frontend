@@ -6,9 +6,6 @@ import styles from './AuditoriesPage.module.scss'
 import { useAppDispatch } from '../../redux/store'
 import { LoadingStatusTypes } from '../../redux/appTypes'
 import { createAuditoryCategory } from '../../redux/auditories/auditoriesAsyncActions'
-import { Theme, toast } from 'react-toastify'
-import { useContext } from 'react'
-import { ThemeContext } from '../../App'
 
 interface ICreateAuditoryCategoryFormProps {
   loadingStatus: LoadingStatusTypes
@@ -22,7 +19,9 @@ const CreateAuditoryCategoryForm: React.FC<ICreateAuditoryCategoryFormProps> = (
   const dispatch = useAppDispatch()
 
   const {
+    watch,
     register,
+    getValues,
     resetField,
     clearErrors,
     formState: { errors },
@@ -35,11 +34,6 @@ const CreateAuditoryCategoryForm: React.FC<ICreateAuditoryCategoryFormProps> = (
     await dispatch(createAuditoryCategory(data.name))
 
     onClearFields()
-    // toast.promise(dispatch(createAuditoryCategory(data.name)), {
-    //   pending: 'Завантаження...',
-    //   success: 'Додано нову категорію',
-    //   error: 'Помилка при створенні категорії',
-    // })
   }
 
   const onClearFields = () => {
@@ -51,13 +45,13 @@ const CreateAuditoryCategoryForm: React.FC<ICreateAuditoryCategoryFormProps> = (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className={styles['categories-form']}>
         <Input
-          setValue={() => {}}
           label="Назва"
-          labelBackColor="dark"
           width="100%"
-          {...register('name', { required: "Ім'я обов'язкове" })}
+          labelBackColor="dark"
+          value={watch('name')}
           isError={!!errors.name}
           errorMessage={errors.name?.message}
+          {...register('name', { required: "Ім'я обов'язкове" })}
         />
       </div>
 

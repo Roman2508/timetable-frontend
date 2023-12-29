@@ -12,7 +12,7 @@ import { createAuditory } from '../../redux/auditories/auditoriesAsyncActions'
 import { LoadingStatusTypes } from '../../redux/appTypes'
 import { ThemeContext } from '../../App'
 
-type NewAuditoryFieldsType = {
+export type AuditoryFieldsType = {
   name: string
   seatsNumber: number
   category: { value: string; label: string }
@@ -27,17 +27,18 @@ const CreateAuditoryForm: React.FC<ICreateAuditoryFormProps> = ({ loadingStatus,
   const dispatch = useAppDispatch()
 
   const {
+    watch,
     control,
     register,
     resetField,
     clearErrors,
     formState: { errors },
     handleSubmit,
-  } = useForm<NewAuditoryFieldsType>({
+  } = useForm<AuditoryFieldsType>({
     mode: 'onChange',
   })
 
-  const onSubmit: SubmitHandler<NewAuditoryFieldsType> = async (data) => {
+  const onSubmit: SubmitHandler<AuditoryFieldsType> = async (data) => {
     const newAuditory = {
       name: data.name,
       seatsNumber: Number(data.seatsNumber),
@@ -45,11 +46,6 @@ const CreateAuditoryForm: React.FC<ICreateAuditoryFormProps> = ({ loadingStatus,
     }
     await dispatch(createAuditory(newAuditory))
     onClearFields()
-    // toast.promise(dispatch(createAuditory(newAuditory)), {
-    //   pending: 'Завантаження...',
-    //   success: 'Додано нову аудиторію',
-    //   error: 'Помилка при створенні аудиторії',
-    // })
   }
 
   const onClearFields = () => {
@@ -65,7 +61,7 @@ const CreateAuditoryForm: React.FC<ICreateAuditoryFormProps> = ({ loadingStatus,
         <Input
           width="245px"
           label="Назва"
-          setValue={() => {}}
+          value={watch('name')}
           labelBackColor="dark"
           isError={!!errors.name}
           errorMessage={errors.name?.message}
@@ -75,7 +71,7 @@ const CreateAuditoryForm: React.FC<ICreateAuditoryFormProps> = ({ loadingStatus,
         <Input
           width="245px"
           htmlType="number"
-          setValue={() => {}}
+          value={watch('seatsNumber')}
           labelBackColor="dark"
           label="Кількість місць"
           isError={!!errors.seatsNumber}

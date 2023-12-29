@@ -1,6 +1,7 @@
 import React from 'react'
-import styles from './Input.module.scss'
 import cn from 'classnames'
+
+import styles from './Input.module.scss'
 import { ThemeContext } from '../../../App'
 
 interface IInputProps {
@@ -60,6 +61,9 @@ const Input = React.forwardRef<HTMLInputElement, IInputProps>(
             className={cn(styles.label, {
               [styles.errorLabel]: isError,
               [styles.focusLabel]: isFocusLabel,
+              [styles.dark]: colorMode === 'dark',
+              [styles.light]: colorMode === 'light',
+              [styles.notEmpty]: value || props.value,
               [styles.standartLabel]: variant === 'standart',
               [styles.outlinedLabel]: variant === 'outlined',
               [styles.focusLabelDark]: isFocus && colorMode === 'dark',
@@ -82,10 +86,10 @@ const Input = React.forwardRef<HTMLInputElement, IInputProps>(
           })}
           style={{ width }}
         >
-          {/*  */}
+          {/* input */}
           <input
-            // value={value}
             ref={ref}
+            {...props}
             type={htmlType}
             onBlur={onBlurHandler}
             style={{ width, ...sx }}
@@ -97,8 +101,8 @@ const Input = React.forwardRef<HTMLInputElement, IInputProps>(
               [styles.lightModeInput]: colorMode === 'light',
               [styles.errorInput]: isError,
             })}
+            // value={value}
             // onChange={(e) => setValue(e.target.value)}
-            {...props}
           />
 
           {errorMessage && (

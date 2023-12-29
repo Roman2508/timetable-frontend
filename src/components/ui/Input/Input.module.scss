@@ -7,10 +7,12 @@
 
 .label {
   top: 50%;
+  z-index: 0;
   font-size: 18px;
   position: absolute;
   transform: translateY(-50%);
   transition: all 0.2s ease-in-out;
+  background-color: transparent;
 }
 
 .label.errorLabel {
@@ -49,6 +51,7 @@
     }
   }
 }
+
 .standartLabel {
   left: 0;
 }
@@ -67,11 +70,24 @@
   z-index: 1;
   padding: 0 5px;
   font-size: 13px;
-  // background-color: #23272f;
+}
+
+.notEmpty {
+  top: 0;
+  z-index: 1;
+  padding: 0 5px;
+  font-size: 13px;
+
+  &.light.outlinedLabel::before {
+    background-color: #ffffff;
+  }
+
+  &.dark.outlinedLabel::before {
+    background-color: #343a46;
+  }
 }
 
 .focusLabel {
-  // color: #087ea4;
   color: #20bd5f;
 }
 
@@ -92,6 +108,7 @@
   outline: none;
   font-size: 18px;
   background-color: transparent;
+  // z-index: 2;
 }
 
 .outlinedInput.darkModeInput:hover {

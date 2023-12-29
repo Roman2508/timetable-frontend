@@ -4,7 +4,11 @@ export type CreateAuditoryPayloadType = {
   category: number
 }
 
-export type UpdateAuditoryPayloadType = {
+export type UpdateAuditoryCategoryPayloadType = {
   id: number
   name: string
 }
+
+export type UpdateAuditoryPayloadType = {
+  id: Number
+} & CreateAuditoryPayloadType

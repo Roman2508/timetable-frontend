@@ -1,6 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { auditoriesAPI } from '../../api/api'
-import { CreateAuditoryPayloadType, UpdateAuditoryPayloadType } from '../../api/apiTypes'
+import {
+  CreateAuditoryPayloadType,
+  UpdateAuditoryCategoryPayloadType,
+  UpdateAuditoryPayloadType,
+} from '../../api/apiTypes'
 
 /* categories */
 export const getAuditoryCategories = createAsyncThunk('auditory-categories/getAuditoryCategories', async () => {
@@ -26,7 +30,7 @@ export const createAuditoryCategory = createAsyncThunk(
 
 export const updateAuditoryCategory = createAsyncThunk(
   'auditory-categories/updateAuditoryCategory',
-  async (payload: UpdateAuditoryPayloadType) => {
+  async (payload: UpdateAuditoryCategoryPayloadType) => {
     try {
       const { data } = await auditoriesAPI.updateAuditoryCategory(payload)
       return data
@@ -56,6 +60,30 @@ export const createAuditory = createAsyncThunk(
   async (payload: CreateAuditoryPayloadType) => {
     try {
       const { data } = await auditoriesAPI.createAuditory(payload)
+      return data
+    } catch (error) {
+      return await Promise.reject((error as any).response.data.message)
+    }
+  }
+)
+
+export const updateAuditory = createAsyncThunk(
+  'auditory-categories/updateAuditory',
+  async (payload: UpdateAuditoryPayloadType) => {
+    try {
+      const { data } = await auditoriesAPI.updateAuditory(payload)
+      return data
+    } catch (error) {
+      return await Promise.reject((error as any).response.data.message)
+    }
+  }
+)
+
+export const deleteAuditory = createAsyncThunk(
+  'auditory-categories/deleteAuditory',
+  async (id: number) => {
+    try {
+      const { data } = await auditoriesAPI.deleteAuditory(id)
       return data
     } catch (error) {
       return await Promise.reject((error as any).response.data.message)

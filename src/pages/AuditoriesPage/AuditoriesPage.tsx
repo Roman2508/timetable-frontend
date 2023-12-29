@@ -14,11 +14,16 @@ import CreateAuditoryForm from '../../components/AuditoriesPage/CreateAuditoryFo
 import { getAuditoryCategories } from '../../redux/auditories/auditoriesAsyncActions'
 import CreateAuditoryCategoryForm from '../../components/AuditoriesPage/CreateAuditoryCategoryForm'
 import UpdateAuditoryCategoryModal from '../../components/AuditoriesPage/UpdateAuditoryCategoryModal'
+import UpdateAuditoryModal from '../../components/AuditoriesPage/UpdateAuditoryModal'
+import { AuditoriesTypes } from '../../redux/auditories/auditoriesTypes'
 
 export const AuditoriesPage = () => {
   const dispatch = useAppDispatch()
 
-  const { ref, isShow, setIsShow } = useOutside(false)
+  const [selectedAuditory, setSelectedAuditory] = React.useState<AuditoriesTypes | null>(null)
+
+  const { ref: categoryRef, isShow: isCategoryModalShow, setIsShow: setIsCategoryModalShow } = useOutside(false)
+  const { ref: auditoryRef, isShow: isAuditoryModalShow, setIsShow: setIsAuditoryModalShow } = useOutside(false)
 
   const { auditoriCategories, loadingStatus } = useSelector(auditoriesSelector)
 
@@ -30,13 +35,26 @@ export const AuditoriesPage = () => {
     fetchData()
   }, [])
 
+  // React.useEffect(() => {
+
+  // }, [selectedAuditory])
+
   return (
     <>
       <UpdateAuditoryCategoryModal
-        ref={ref}
-        isShow={isShow}
+        ref={categoryRef}
+        isShow={isCategoryModalShow}
+        setIsShow={setIsCategoryModalShow}
         auditoriCategories={auditoriCategories}
-        setIsShow={setIsShow}
+      />
+
+      <UpdateAuditoryModal
+        ref={auditoryRef}
+        isShow={isAuditoryModalShow}
+        setIsShow={setIsAuditoryModalShow}
+        selectedAuditory={selectedAuditory}
+        auditoriCategories={auditoriCategories}
+        setSelectedAuditory={setSelectedAuditory}
       />
 
       <div className={styles.contaner}>
@@ -53,7 +71,10 @@ export const AuditoriesPage = () => {
               ДОДАТИ КАТЕГОРІЮ
             </Title>
 
-            <CreateAuditoryCategoryForm loadingStatus={loadingStatus} setUpdateCategoryModalVisible={setIsShow} />
+            <CreateAuditoryCategoryForm
+              loadingStatus={loadingStatus}
+              setUpdateCategoryModalVisible={setIsCategoryModalShow}
+            />
           </Paper>
           {/*  */}
         </div>
@@ -71,7 +92,13 @@ export const AuditoriesPage = () => {
               <Accordion key={category.id} sx={{ marginBottom: '15px' }} title={category.name}>
                 <ListWrapper sx={{ maxWidth: '100%' }}>
                   {category.auditories.map((auditory) => (
-                    <ListItem key={auditory.id}>{`${auditory.name} (${auditory.seatsNumber})`}</ListItem>
+                    <ListItem
+                      key={auditory.id}
+                      onClick={() => {
+                        setSelectedAuditory(auditory)
+                        setIsAuditoryModalShow(true)
+                      }}
+                    >{`${auditory.name} (${auditory.seatsNumber})`}</ListItem>
                   ))}
                 </ListWrapper>
               </Accordion>

@@ -1,15 +1,15 @@
 import React from 'react'
+import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 
 import Modal from '../ui/Modal/Modal'
-import styles from './AuditoriesPage.module.scss'
-import { AuditoriesTypes, AuditoryCategoriesTypes } from '../../redux/auditories/auditoriesTypes'
-import Button from '../ui/Button/Button'
-import { Controller, SubmitHandler, useForm } from 'react-hook-form'
-import { AuditoryFieldsType } from './CreateAuditoryForm'
 import Input from '../ui/Input/Input'
+import Button from '../ui/Button/Button'
 import Select from '../ui/Select/Select'
+import styles from './AuditoriesPage.module.scss'
 import { useAppDispatch } from '../../redux/store'
+import { AuditoryFieldsType } from './CreateAuditoryForm'
 import { deleteAuditory, updateAuditory } from '../../redux/auditories/auditoriesAsyncActions'
+import { AuditoriesTypes, AuditoryCategoriesTypes } from '../../redux/auditories/auditoriesTypes'
 
 interface IUpdateAuditoryModalProps {
   isShow: boolean

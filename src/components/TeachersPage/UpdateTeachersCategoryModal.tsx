@@ -5,29 +5,29 @@ import Modal from "../ui/Modal/Modal";
 import Input from "../ui/Input/Input";
 import Select from "../ui/Select/Select";
 import Button from "../ui/Button/Button";
-import styles from "./AuditoriesPage.module.scss";
+import styles from "./TeachersPage.module.scss";
 import { useAppDispatch } from "../../redux/store";
-import { AuditoryCategoriesTypes } from "../../redux/auditories/auditoriesTypes";
+import { TeachersCategoryType } from "../../redux/teachers/teachersTypes";
 import {
-  deleteAuditoryCategory,
-  updateAuditoryCategory,
-} from "../../redux/auditories/auditoriesAsyncActions";
+  deleteTeacherCategory,
+  updateTeacherCategory,
+} from "../../redux/teachers/teachersAsyncActions";
 
 type FieldsType = {
   name: string;
   category: { value: string; label: string };
 };
 
-interface IUpdateAuditoryCategoryModalProps {
-  auditoriCategories: AuditoryCategoriesTypes[] | null;
+interface IUpdateTeachersCategoriesModalProps {
+  teachersCategories: TeachersCategoryType[] | null;
   setIsShow: React.Dispatch<React.SetStateAction<boolean>>;
   isShow: boolean;
 }
 
-const UpdateAuditoryCategoryModal = React.forwardRef<
+const UpdateTeachersCategoriesModal = React.forwardRef<
   HTMLDivElement,
-  IUpdateAuditoryCategoryModalProps
->(({ auditoriCategories, setIsShow, isShow }, ref) => {
+  IUpdateTeachersCategoriesModalProps
+>(({ teachersCategories, setIsShow, isShow }, ref) => {
   const dispatch = useAppDispatch();
 
   const {
@@ -47,7 +47,7 @@ const UpdateAuditoryCategoryModal = React.forwardRef<
   const onSubmit: SubmitHandler<FieldsType> = async (data) => {
     const payload = { name: data.name, id: Number(data.category.value) };
     setIsShow(false);
-    await dispatch(updateAuditoryCategory(payload));
+    await dispatch(updateTeacherCategory(payload));
     resetField("category");
     resetField("name");
   };
@@ -58,14 +58,12 @@ const UpdateAuditoryCategoryModal = React.forwardRef<
     if (window.confirm("Ви дійсно хочете видалити категорію?")) {
       setIsShow(false);
 
-      await dispatch(deleteAuditoryCategory(Number(deletedCategoryId)));
+      await dispatch(deleteTeacherCategory(Number(deletedCategoryId)));
 
       resetField("category");
       resetField("name");
     }
   };
-
-  // console.log(setFocus)
 
   React.useEffect(() => {
     if (!watchedFieldValue) return;
@@ -85,8 +83,8 @@ const UpdateAuditoryCategoryModal = React.forwardRef<
           control={control}
           rules={{ required: true }}
           render={({ field: { onChange, value } }) => {
-            const options = auditoriCategories
-              ? auditoriCategories.map((el) => ({
+            const options = teachersCategories
+              ? teachersCategories.map((el) => ({
                   value: String(el.id),
                   label: el.name,
                 }))
@@ -114,6 +112,7 @@ const UpdateAuditoryCategoryModal = React.forwardRef<
           width="100%"
           labelBackColor="dark"
           value={watch("name")}
+          disabled={!watchedFieldValue}
           wrapperSx={{ margin: "20px 0" }}
           {...register("name", { required: true })}
         />
@@ -135,4 +134,4 @@ const UpdateAuditoryCategoryModal = React.forwardRef<
   );
 });
 
-export default UpdateAuditoryCategoryModal;
+export default UpdateTeachersCategoriesModal;

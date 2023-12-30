@@ -1,24 +1,24 @@
-import React from 'react'
-import cn from 'classnames'
-import { Outlet } from 'react-router-dom'
-import { Theme, ToastContainer } from 'react-toastify'
+import React from "react";
+import cn from "classnames";
+import { Outlet } from "react-router-dom";
+import { Theme, ToastContainer } from "react-toastify";
 
-import Header from '../Header/Header'
-import { ThemeContext } from '../../App'
+import Header from "../Header/Header";
+import { ThemeContext } from "../../App";
 
 const Layout: React.FC = () => {
-  const { colorMode } = React.useContext(ThemeContext)
+  const { colorMode } = React.useContext(ThemeContext);
 
   return (
     <div
-      className={cn('app-wrapper', {
-        ['light-theme']: colorMode === 'light',
-        ['dark-theme']: colorMode === 'dark',
+      className={cn("app-wrapper", {
+        ["light-theme"]: colorMode === "light",
+        ["dark-theme"]: colorMode === "dark",
       })}
     >
       <ToastContainer
         position="top-right"
-        autoClose={1000}
+        autoClose={1500}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
@@ -35,7 +35,7 @@ const Layout: React.FC = () => {
         <Outlet />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Layout
+export default Layout;

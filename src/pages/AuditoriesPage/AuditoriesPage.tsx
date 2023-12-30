@@ -1,39 +1,47 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React from "react";
+import { useSelector } from "react-redux";
 
-import styles from './AuditoriesPage.module.scss'
-import { useAppDispatch } from '../../redux/store'
-import { useOutside } from '../../hooks/useOutside'
-import Paper from '../../components/ui/Paper/Paper'
-import Title from '../../components/ui/Title/Title'
-import ListItem from '../../components/ui/List/ListItem'
-import ListWrapper from '../../components/ui/List/ListWrapper'
-import { Accordion } from '../../components/ui/Accordion/Accordion'
-import { auditoriesSelector } from '../../redux/auditories/auditoriesSlise'
-import CreateAuditoryForm from '../../components/AuditoriesPage/CreateAuditoryForm'
-import { getAuditoryCategories } from '../../redux/auditories/auditoriesAsyncActions'
-import CreateAuditoryCategoryForm from '../../components/AuditoriesPage/CreateAuditoryCategoryForm'
-import UpdateAuditoryCategoryModal from '../../components/AuditoriesPage/UpdateAuditoryCategoryModal'
-import UpdateAuditoryModal from '../../components/AuditoriesPage/UpdateAuditoryModal'
-import { AuditoriesTypes } from '../../redux/auditories/auditoriesTypes'
+import styles from "./AuditoriesPage.module.scss";
+import { useAppDispatch } from "../../redux/store";
+import { useOutside } from "../../hooks/useOutside";
+import Paper from "../../components/ui/Paper/Paper";
+import Title from "../../components/ui/Title/Title";
+import ListItem from "../../components/ui/List/ListItem";
+import ListWrapper from "../../components/ui/List/ListWrapper";
+import { Accordion } from "../../components/ui/Accordion/Accordion";
+import { auditoriesSelector } from "../../redux/auditories/auditoriesSlise";
+import CreateAuditoryForm from "../../components/AuditoriesPage/CreateAuditoryForm";
+import { getAuditoryCategories } from "../../redux/auditories/auditoriesAsyncActions";
+import CreateAuditoryCategoryForm from "../../components/AuditoriesPage/CreateAuditoryCategoryForm";
+import UpdateAuditoryCategoryModal from "../../components/AuditoriesPage/UpdateAuditoryCategoryModal";
+import UpdateAuditoryModal from "../../components/AuditoriesPage/UpdateAuditoryModal";
+import { AuditoriesTypes } from "../../redux/auditories/auditoriesTypes";
+import Skeleton from "../../components/ui/Skeleton/Skeleton";
 
 export const AuditoriesPage = () => {
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
-  const [selectedAuditory, setSelectedAuditory] = React.useState<AuditoriesTypes | null>(null)
+  const [selectedAuditory, setSelectedAuditory] =
+    React.useState<AuditoriesTypes | null>(null);
 
-  const { ref: categoryRef, isShow: isCategoryModalShow, setIsShow: setIsCategoryModalShow } = useOutside(false)
-  const { ref: auditoryRef, isShow: isAuditoryModalShow, setIsShow: setIsAuditoryModalShow } = useOutside(false)
+  const {
+    ref: categoryRef,
+    isShow: isCategoryModalShow,
+    setIsShow: setIsCategoryModalShow,
+  } = useOutside(false);
+  const {
+    ref: auditoryRef,
+    isShow: isAuditoryModalShow,
+    setIsShow: setIsAuditoryModalShow,
+  } = useOutside(false);
 
-  const { auditoriCategories, loadingStatus } = useSelector(auditoriesSelector)
+  const { auditoriCategories, loadingStatus } = useSelector(auditoriesSelector);
 
   React.useEffect(() => {
-    const fetchData = async () => {
-      await dispatch(getAuditoryCategories())
+    if (!auditoriCategories) {
+      dispatch(getAuditoryCategories());
     }
-
-    fetchData()
-  }, [])
+  }, []);
 
   // React.useEffect(() => {
 
@@ -58,16 +66,19 @@ export const AuditoriesPage = () => {
       />
 
       <div className={styles.contaner}>
-        <div className={styles['left-col']}>
-          <Paper sx={{ marginBottom: '15px' }}>
-            <Title align="center" Variant="h6" sx={{ marginBottom: '40px' }}>
+        <div className={styles["left-col"]}>
+          <Paper sx={{ marginBottom: "15px" }}>
+            <Title align="center" Variant="h6" sx={{ marginBottom: "40px" }}>
               ДОДАТИ НОВУ АУДИТОРІЮ
             </Title>
 
-            <CreateAuditoryForm loadingStatus={loadingStatus} auditoriCategories={auditoriCategories} />
+            <CreateAuditoryForm
+              loadingStatus={loadingStatus}
+              auditoriCategories={auditoriCategories}
+            />
           </Paper>
-          <Paper sx={{ marginBottom: '20px' }}>
-            <Title align="center" Variant="h6" sx={{ marginBottom: '40px' }}>
+          <Paper sx={{ marginBottom: "20px" }}>
+            <Title align="center" Variant="h6" sx={{ marginBottom: "40px" }}>
               ДОДАТИ КАТЕГОРІЮ
             </Title>
 
@@ -78,25 +89,45 @@ export const AuditoriesPage = () => {
           </Paper>
           {/*  */}
         </div>
-        <div className={styles['right-col']}>
-          <Paper sx={{ textAlign: 'center', marginBottom: '15px' }}>
+        <div className={styles["right-col"]}>
+          <Paper sx={{ textAlign: "center", marginBottom: "15px" }}>
             <Title align="center" Variant="h6">
               АУДИТОРІЇ
             </Title>
           </Paper>
 
           {!auditoriCategories ? (
-            <h1>loading...</h1>
+            <div>
+              <Skeleton
+                width="100%"
+                height="62px"
+                styles={{ marginBottom: "12px" }}
+              />
+              <Skeleton
+                width="100%"
+                height="62px"
+                styles={{ marginBottom: "12px" }}
+              />
+              <Skeleton
+                width="100%"
+                height="62px"
+                styles={{ marginBottom: "12px" }}
+              />
+            </div>
           ) : (
             auditoriCategories.map((category) => (
-              <Accordion key={category.id} sx={{ marginBottom: '15px' }} title={category.name}>
-                <ListWrapper sx={{ maxWidth: '100%' }}>
+              <Accordion
+                key={category.id}
+                sx={{ marginBottom: "15px" }}
+                title={category.name}
+              >
+                <ListWrapper sx={{ maxWidth: "100%" }}>
                   {category.auditories.map((auditory) => (
                     <ListItem
                       key={auditory.id}
                       onClick={() => {
-                        setSelectedAuditory(auditory)
-                        setIsAuditoryModalShow(true)
+                        setSelectedAuditory(auditory);
+                        setIsAuditoryModalShow(true);
                       }}
                     >{`${auditory.name} (${auditory.seatsNumber})`}</ListItem>
                   ))}
@@ -107,5 +138,5 @@ export const AuditoriesPage = () => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};

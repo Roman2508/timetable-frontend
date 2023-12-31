@@ -1,3 +1,6 @@
+import { useContext } from "react";
+import { ThemeContext } from "../../../App";
+
 interface ISkeletonProps {
   width: string;
   height: string;
@@ -13,6 +16,13 @@ const Skeleton: React.FC<ISkeletonProps> = ({
   className = "",
   styles,
 }) => {
+  const { colorMode } = useContext(ThemeContext);
+
+  const colors = {
+    lighten: colorMode === "light" ? "#ecebeb" : "#5e697d",
+    darken: colorMode === "light" ? "#dfdfdf" : "#4e5665",
+  };
+
   return (
     <svg
       role="img"
@@ -32,7 +42,6 @@ const Skeleton: React.FC<ISkeletonProps> = ({
         ry={radius}
         width={width}
         height={height}
-        // clip-path="url(#clip-path)"
         style={{ fill: "url(#fill)" }}
       ></rect>
       <defs>
@@ -47,7 +56,7 @@ const Skeleton: React.FC<ISkeletonProps> = ({
           />
         </clipPath>
         <linearGradient id="fill">
-          <stop offset="0.599964" stopColor="#dfdfdf" stopOpacity="1">
+          <stop offset="0.599964" stopColor={colors.darken} stopOpacity="1">
             <animate
               attributeName="offset"
               values="-2; -2; 1"
@@ -56,7 +65,7 @@ const Skeleton: React.FC<ISkeletonProps> = ({
               repeatCount="indefinite"
             ></animate>
           </stop>
-          <stop offset="1.59996" stopColor="#ecebeb" stopOpacity="1">
+          <stop offset="1.59996" stopColor={colors.lighten} stopOpacity="1">
             <animate
               attributeName="offset"
               values="-1; -1; 2"
@@ -65,7 +74,7 @@ const Skeleton: React.FC<ISkeletonProps> = ({
               repeatCount="indefinite"
             ></animate>
           </stop>
-          <stop offset="2.59996" stopColor="#dfdfdf" stopOpacity="1">
+          <stop offset="2.59996" stopColor={colors.darken} stopOpacity="1">
             <animate
               attributeName="offset"
               values="0; 0; 3"

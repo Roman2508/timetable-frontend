@@ -10,7 +10,7 @@ import {
 /* categories */
 
 export const getTeachersCategories = createAsyncThunk(
-  "auditory-categories/getTeachersCategories",
+  "teachers-categories/getTeachersCategories",
   async () => {
     try {
       const { data } = await teachersAPI.getTeachersCategories();
@@ -22,7 +22,7 @@ export const getTeachersCategories = createAsyncThunk(
 );
 
 export const createTeacherCategory = createAsyncThunk(
-  "auditory-categories/createTeacherCategory",
+  "teachers-categories/createTeacherCategory",
   async (payload: CreateTeacherCategoryPayloadType) => {
     try {
       const { data } = await teachersAPI.createTeacherCategory(payload);
@@ -34,7 +34,7 @@ export const createTeacherCategory = createAsyncThunk(
 );
 
 export const updateTeacherCategory = createAsyncThunk(
-  "auditory-categories/updateTeacherCategory",
+  "teachers-categories/updateTeacherCategory",
   async (payload: UpdateTeacherCategoryPayloadType) => {
     try {
       const { data } = await teachersAPI.updateTeacherCategory(payload);
@@ -46,7 +46,7 @@ export const updateTeacherCategory = createAsyncThunk(
 );
 
 export const deleteTeacherCategory = createAsyncThunk(
-  "auditory-categories/deleteTeacherCategory",
+  "teachers-categories/deleteTeacherCategory",
   async (id: number) => {
     try {
       const { data } = await teachersAPI.deleteTeacherCategory(id);
@@ -60,7 +60,7 @@ export const deleteTeacherCategory = createAsyncThunk(
 /* teachers */
 
 export const createTeacher = createAsyncThunk(
-  "auditory-categories/createTeacher",
+  "teachers/createTeacher",
   async (payload: CreateTeacherPayloadType) => {
     try {
       const { data } = await teachersAPI.createTeacher(payload);
@@ -72,7 +72,7 @@ export const createTeacher = createAsyncThunk(
 );
 
 export const updateTeacher = createAsyncThunk(
-  "auditory-categories/updateTeacher",
+  "teachers/updateTeacher",
   async (payload: UpdateTeacherPayloadType) => {
     try {
       const { data } = await teachersAPI.updateTeacher(payload);
@@ -84,7 +84,7 @@ export const updateTeacher = createAsyncThunk(
 );
 
 export const deleteTeacher = createAsyncThunk(
-  "auditory-categories/deleteTeacher",
+  "teachers/deleteTeacher",
   async (id: number) => {
     try {
       const { data } = await teachersAPI.deleteTeacher(id);

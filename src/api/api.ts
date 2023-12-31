@@ -13,6 +13,7 @@ import {
   AuditoryCategoriesTypes,
 } from "../redux/auditories/auditoriesTypes";
 import { TeachersCategoryType } from "../redux/teachers/teachersTypes";
+import { PlansCategoriesType } from "../redux/plans/plansTypes";
 
 const instanse = axios.create({
   baseURL: "http://localhost:7777/",
@@ -111,5 +112,12 @@ export const teachersAPI = {
 
   deleteTeacher(id: number) {
     return instanse.delete(`/teachers/${id}`);
+  },
+};
+
+export const plansAPI = {
+  /* categories */
+  getPlansCategories() {
+    return instanse.get<PlansCategoriesType[]>("/plan-categories");
   },
 };

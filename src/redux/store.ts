@@ -2,11 +2,13 @@ import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 import auditoriesSlise from "./auditories/auditoriesSlise";
 import teachersSlice from "./teachers/teachersSlice";
+import plansSlice from "./plans/plansSlice";
 
 export const store = configureStore({
   reducer: {
     auditories: auditoriesSlise,
     teachers: teachersSlice,
+    plans: plansSlice,
   },
 });
 

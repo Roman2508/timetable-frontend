@@ -36,3 +36,8 @@ export type UpdateTeacherPayloadType = {
 } & Omit<TeachersType, "category">;
 
 /* Plans */
+
+export type CreatePlanPayloadType = {
+  name: string;
+  categoryId: number;
+};

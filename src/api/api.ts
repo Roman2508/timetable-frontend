@@ -6,6 +6,7 @@ import {
   UpdateTeacherCategoryPayloadType,
   CreateTeacherPayloadType,
   UpdateTeacherPayloadType,
+  CreatePlanPayloadType,
 } from "./apiTypes";
 import axios from "axios";
 import {
@@ -13,7 +14,7 @@ import {
   AuditoryCategoriesTypes,
 } from "../redux/auditories/auditoriesTypes";
 import { TeachersCategoryType } from "../redux/teachers/teachersTypes";
-import { PlansCategoriesType } from "../redux/plans/plansTypes";
+import { PlansCategoriesType, PlansType } from "../redux/plans/plansTypes";
 
 const instanse = axios.create({
   baseURL: "http://localhost:7777/",
@@ -42,20 +43,17 @@ export const auditoriesAPI = {
   getAuditoryCategories() {
     return instanse.get<AuditoryCategoriesTypes[]>("/auditory-categories");
   },
-
   createAuditoryCategory(name: string) {
     return instanse.post<AuditoryCategoriesTypes>("/auditory-categories", {
       name,
     });
   },
-
   updateAuditoryCategory(payload: UpdateAuditoryCategoryPayloadType) {
     return instanse.patch<AuditoryCategoriesTypes>(
       `/auditory-categories/${payload.id}`,
       { name: payload.name }
     );
   },
-
   async deleteAuditoryCategory(id: number) {
     return instanse.delete<number>(`/auditory-categories/${id}`);
   },
@@ -65,12 +63,10 @@ export const auditoriesAPI = {
   createAuditory(payload: CreateAuditoryPayloadType) {
     return instanse.post<AuditoriesTypes>("/auditories", payload);
   },
-
   updateAuditory(payload: UpdateAuditoryPayloadType) {
     const { id, ...rest } = payload;
     return instanse.patch<AuditoriesTypes>(`/auditories/${id}`, rest);
   },
-
   deleteAuditory(id: number) {
     return instanse.delete<number>(`/auditories/${id}`);
   },
@@ -81,11 +77,9 @@ export const teachersAPI = {
   getTeachersCategories() {
     return instanse.get<TeachersCategoryType[]>("/teacher-categories");
   },
-
   createTeacherCategory(payload: CreateTeacherCategoryPayloadType) {
     return instanse.post("/teacher-categories/", { name: payload.name });
   },
-
   updateTeacherCategory(payload: UpdateTeacherCategoryPayloadType) {
     const { id, ...rest } = payload;
 
@@ -94,7 +88,6 @@ export const teachersAPI = {
       rest
     );
   },
-
   deleteTeacherCategory(id: number) {
     return instanse.delete<number>(`/teacher-categories/${id}`);
   },
@@ -103,13 +96,11 @@ export const teachersAPI = {
   createTeacher(payload: CreateTeacherPayloadType) {
     return instanse.post("/teachers", payload);
   },
-
   updateTeacher(payload: UpdateTeacherPayloadType) {
     const { id, ...rest } = payload;
 
     return instanse.patch(`/teachers/${id}`, rest);
   },
-
   deleteTeacher(id: number) {
     return instanse.delete(`/teachers/${id}`);
   },
@@ -119,5 +110,32 @@ export const plansAPI = {
   /* categories */
   getPlansCategories() {
     return instanse.get<PlansCategoriesType[]>("/plan-categories");
+  },
+  createPlanCategory(payload: { name: string }) {
+    return instanse.post<PlansCategoriesType>("/plan-categories", payload);
+  },
+  updatePlanCategory(payload: { name: string; id: number }) {
+    return instanse.patch<PlansCategoriesType>(
+      `/plan-categories/${payload.id}`,
+      {
+        name: payload.name,
+      }
+    );
+  },
+  deletePlanCategory(id: number) {
+    return instanse.delete<number>(`/plan-categories/${id}`);
+  },
+
+  /* plans */
+  createPlan(payload: CreatePlanPayloadType) {
+    return instanse.post<PlansType>("/plan", payload);
+  },
+  updatePlan(payload: { name: string; id: number }) {
+    return instanse.patch<PlansType>(`/plan/${payload.id}`, {
+      name: payload.name,
+    });
+  },
+  deletePlan(id: number) {
+    return instanse.delete<number>(`/plan/${id}`);
   },
 };

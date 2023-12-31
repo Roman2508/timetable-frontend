@@ -141,8 +141,6 @@ const teachersSlice = createSlice({
       (state, action: PayloadAction<TeachersType>) => {
         if (!state.teachersCategories) return;
 
-        console.log(action.payload);
-
         const newTeacherCategories = state.teachersCategories.map((el) => {
           if (el.id === action.payload.category.id) {
             return { ...el, teachers: [...el.teachers, action.payload] };
@@ -215,7 +213,7 @@ const teachersSlice = createSlice({
 
         state.teachersCategories = updatedCategories;
         state.loadingStatus = LoadingStatusTypes.SUCCESS;
-        toast.success("Викладача оновлено");
+        toast.success("Викладача видалено");
       }
     );
   },

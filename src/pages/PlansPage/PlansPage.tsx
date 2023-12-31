@@ -11,13 +11,21 @@ import Paper from "../../components/ui/Paper/Paper";
 import IconButton from "../../components/ui/IconButton/IconButton";
 import { NavLink } from "react-router-dom";
 import { useAppDispatch } from "../../redux/store";
-import { getPlansCategories } from "../../redux/plans/plansAsyncActions";
+import {
+  deletePlanCategory,
+  getPlansCategories,
+} from "../../redux/plans/plansAsyncActions";
 import { useSelector } from "react-redux";
 import { plansSelector } from "../../redux/plans/plansSlice";
 import Button from "../../components/ui/Button/Button";
 import Skeleton from "../../components/ui/Skeleton/Skeleton";
 import AddPlanModal from "../../components/PlansPage/AddPlanModal";
 import { useOutside } from "../../hooks/useOutside";
+import PlanModals, {
+  PlanModalsType,
+} from "../../components/PlansPage/PlanModals";
+import { PlansType } from "../../redux/plans/plansTypes";
+import { LoadingStatusTypes } from "../../redux/appTypes";
 
 const plans = [
   {
@@ -250,10 +258,21 @@ const PlansPage = () => {
     (typeof plans)[0] | null
   >(null);
 
+  const [modalType, setModalType] = React.useState<PlanModalsType>("add-plan");
+
+  const [selectedPlanCategory, setSelectedPlanCategory] = React.useState<{
+    id: number;
+    name: string;
+  } | null>(null);
+
+  const [selectedPlanId, setSelectedPlanId] = React.useState<number | null>(
+    null
+  );
+
   const {
-    ref: categoryRef,
-    isShow: isCategoryModalShow,
-    setIsShow: setIsCategoryModalShow,
+    ref: ref,
+    isShow: isModalShow,
+    setIsShow: setIsModalShow,
   } = useOutside(false);
 
   React.useEffect(() => {
@@ -274,13 +293,38 @@ const PlansPage = () => {
     }
   };
 
+  const onOpenModal = (
+    modalType: PlanModalsType,
+    planCategory: { id: number; name: string } | null
+  ) => {
+    setModalType(modalType);
+    setIsModalShow(true);
+    setSelectedPlanCategory(planCategory);
+  };
+
+  const onDeleteCategory = (id: number) => {
+    if (window.confirm("Ви дійсно хочете видалити категорію?")) {
+      dispatch(deletePlanCategory(id));
+    }
+  };
+
   return (
     <>
-      <AddPlanModal
-        ref={categoryRef}
-        isShow={isCategoryModalShow}
-        setIsShow={setIsCategoryModalShow}
+      <PlanModals
+        ref={ref}
+        modalType={modalType}
+        isShow={isModalShow}
+        setIsShow={setIsModalShow}
+        selectedPlanId={selectedPlanId}
+        plansCategories={plansCategories}
+        selectedPlanCategory={selectedPlanCategory}
       />
+
+      {/* <AddPlanModal
+        ref={ref}
+        isShow={isModalShow}
+        setIsShow={setIsModalShow}
+      /> */}
 
       <div className={styles.container}>
         <Title sx={{ marginBottom: "20px" }}>Навчальні плани</Title>
@@ -329,13 +373,29 @@ const PlansPage = () => {
                       </IconButton>
                     </div>
                     <div className={styles["plan-category-actions"]}>
-                      <div className={styles["plan-category-actions-item"]}>
+                      <div
+                        className={styles["plan-category-actions-item"]}
+                        onClick={() =>
+                          onOpenModal("update-category", {
+                            id: el.id,
+                            name: el.name,
+                          })
+                        }
+                      >
                         Оновити
                       </div>
-                      <div className={styles["plan-category-actions-item"]}>
+                      <div
+                        className={styles["plan-category-actions-item"]}
+                        onClick={() => onDeleteCategory(el.id)}
+                      >
                         Видалити
                       </div>
-                      <div className={styles["plan-category-actions-item"]}>
+                      <div
+                        className={styles["plan-category-actions-item"]}
+                        onClick={() =>
+                          onOpenModal("add-plan", { id: el.id, name: el.name })
+                        }
+                      >
                         Додати
                       </div>
                     </div>
@@ -358,6 +418,12 @@ const PlansPage = () => {
 
                           <div className={styles["plan-controls"]}>
                             <IconButton
+                              onClick={() =>
+                                onOpenModal("update-plan", {
+                                  id: el.id,
+                                  name: el.name,
+                                })
+                              }
                               sx={{
                                 marginRight: "10px",
                               }}
@@ -365,7 +431,15 @@ const PlansPage = () => {
                               <RenameIcon size={20} />
                             </IconButton>
 
-                            <IconButton>
+                            <IconButton
+                              onClick={() => {
+                                setSelectedPlanId(plan.id);
+                                onOpenModal("update-plan", {
+                                  id: el.id,
+                                  name: el.name,
+                                });
+                              }}
+                            >
                               <DeleteIcon size={20} />
                             </IconButton>
                           </div>
@@ -382,7 +456,8 @@ const PlansPage = () => {
         <div className={styles["add-plan-wrapper"]}>
           <Button
             variant="outlined"
-            onClick={() => setIsCategoryModalShow(true)}
+            onClick={() => onOpenModal("add-category", null)}
+            disabled={loadingStatus === LoadingStatusTypes.LOADING}
           >
             Додати нову категорiю
           </Button>

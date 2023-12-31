@@ -14,4 +14,5 @@ export type PlansCategoriesType = {
 export type PlansType = {
   id: number;
   name: string;
+  category: { id: number; name: string };
 };

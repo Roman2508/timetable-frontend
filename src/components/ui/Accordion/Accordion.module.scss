@@ -49,7 +49,7 @@
 .accordion-title {
   &::before,
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     width: 20px;
     height: 2px;
@@ -80,8 +80,25 @@
 }
 
 .accordion-text {
-  //   padding: 0 5px;
   padding: 0;
+
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: all 500ms;
+
+  & > div {
+    overflow: hidden;
+    transition: all 500ms;
+    padding: 0;
+  }
+
+  &.open {
+    grid-template-rows: 1fr;
+
+    & > div {
+      padding: 8px 0;
+    }
+  }
 }
 
 .accordion-text li {
@@ -91,7 +108,7 @@
 }
 
 .accordion-text li::before {
-  content: '';
+  content: "";
   position: absolute;
   left: -15px;
   top: 8px;

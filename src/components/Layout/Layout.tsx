@@ -1,13 +1,14 @@
-import React from "react";
-import cn from "classnames";
-import { Outlet } from "react-router-dom";
-import { Theme, ToastContainer } from "react-toastify";
+import React from "react"
+import cn from "classnames"
+import { Outlet } from "react-router-dom"
+import { Theme, ToastContainer } from "react-toastify"
 
-import Header from "../Header/Header";
-import { ThemeContext } from "../../App";
+import Header from "../Header/Header"
+import { ThemeContext } from "../../App"
+import AppAlert from "../AppAlert/AppAlert"
 
 const Layout: React.FC = () => {
-  const { colorMode } = React.useContext(ThemeContext);
+  const { colorMode } = React.useContext(ThemeContext)
 
   return (
     <div
@@ -16,18 +17,7 @@ const Layout: React.FC = () => {
         ["dark-theme"]: colorMode === "dark",
       })}
     >
-      <ToastContainer
-        position="top-right"
-        autoClose={1500}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme={colorMode as Theme}
-      />
+      <AppAlert />
 
       <Header />
 
@@ -35,7 +25,7 @@ const Layout: React.FC = () => {
         <Outlet />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Layout;
+export default Layout

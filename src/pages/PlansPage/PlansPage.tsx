@@ -1,312 +1,67 @@
-import React from "react";
-import cn from "classnames";
-import { IoIosArrowDown as ArrowDown } from "react-icons/io";
-import { MdDeleteOutline as DeleteIcon } from "react-icons/md";
-import { MdDriveFileRenameOutline as RenameIcon } from "react-icons/md";
+import React from "react"
+import { useSelector } from "react-redux"
 
-import { ThemeContext } from "../../App";
-import styles from "./PlansPage.module.scss";
-import Title from "../../components/ui/Title/Title";
-import Paper from "../../components/ui/Paper/Paper";
-import IconButton from "../../components/ui/IconButton/IconButton";
-import { NavLink } from "react-router-dom";
-import { useAppDispatch } from "../../redux/store";
-import {
-  deletePlanCategory,
-  getPlansCategories,
-} from "../../redux/plans/plansAsyncActions";
-import { useSelector } from "react-redux";
-import { plansSelector } from "../../redux/plans/plansSlice";
-import Button from "../../components/ui/Button/Button";
-import Skeleton from "../../components/ui/Skeleton/Skeleton";
-import AddPlanModal from "../../components/PlansPage/AddPlanModal";
-import { useOutside } from "../../hooks/useOutside";
-import PlanModals, {
-  PlanModalsType,
-} from "../../components/PlansPage/PlanModals";
-import { PlansType } from "../../redux/plans/plansTypes";
-import { LoadingStatusTypes } from "../../redux/appTypes";
-
-const plans = [
-  {
-    id: 1,
-    name: "Менеджмент 1",
-    createdAt: "08.12.23",
-    plans: [
-      {
-        id: 1,
-        name: "Фармація, промислова фармація, Фаховий молодший бакалавр",
-      },
-      { id: 1, name: "Фармація, промислова фармація" },
-      { id: 1, name: "Фармація, промислова фармація" },
-      {
-        id: 1,
-        name: "Фармація, промислова фармація, Фаховий молодший бакалавр",
-      },
-      { id: 1, name: "Фармація, промислова фармація" },
-      { id: 1, name: "Фармація, промислова фармація" },
-      {
-        id: 1,
-        name: "Фармація, промислова фармація, Фаховий молодший бакалавр",
-      },
-      { id: 1, name: "Фармація, промислова фармація" },
-      { id: 1, name: "Фармація, промислова фармація" },
-      {
-        id: 1,
-        name: "Фармація, промислова фармація, Фаховий молодший бакалавр",
-      },
-      { id: 1, name: "Фармація, промислова фармація" },
-      { id: 1, name: "Фармація, промислова фармація" },
-    ],
-  },
-  {
-    id: 2,
-    name: "Фармація, промислова фармація 2",
-    createdAt: "08.12.23",
-    plans: [
-      {
-        id: 1,
-        name: "Фармація, промислова фармація, Фаховий молодший бакалавр",
-      },
-      { id: 1, name: "Фармація, промислова фармація" },
-      { id: 1, name: "Фармація, промислова фармація" },
-      {
-        id: 1,
-        name: "Фармація, промислова фармація, Фаховий молодший бакалавр",
-      },
-      { id: 1, name: "Фармація, промислова фармація" },
-      { id: 1, name: "Фармація, промислова фармація" },
-      {
-        id: 1,
-        name: "Фармація, промислова фармація, Фаховий молодший бакалавр",
-      },
-      { id: 1, name: "Фармація, промислова фармація" },
-      { id: 1, name: "Фармація, промислова фармація" },
-      {
-        id: 1,
-        name: "Фармація, промислова фармація, Фаховий молодший бакалавр",
-      },
-      { id: 1, name: "Фармація, промислова фармація" },
-      { id: 1, name: "Фармація, промислова фармація" },
-    ],
-  },
-  {
-    id: 3,
-    name: "Технології медичної діагностики та лікування 3",
-    createdAt: "08.12.23",
-    plans: [
-      {
-        id: 1,
-        name: "Фармація, промислова фармація, Фаховий молодший бакалавр",
-      },
-      { id: 1, name: "Фармація, промислова фармація" },
-      { id: 1, name: "Фармація, промислова фармація" },
-      {
-        id: 1,
-        name: "Фармація, промислова фармація, Фаховий молодший бакалавр",
-      },
-      { id: 1, name: "Фармація, промислова фармація" },
-      { id: 1, name: "Фармація, промислова фармація" },
-      {
-        id: 1,
-        name: "Фармація, промислова фармація, Фаховий молодший бакалавр",
-      },
-      { id: 1, name: "Фармація, промислова фармація" },
-      { id: 1, name: "Фармація, промислова фармація" },
-      {
-        id: 1,
-        name: "Фармація, промислова фармація, Фаховий молодший бакалавр",
-      },
-      { id: 1, name: "Фармація, промислова фармація" },
-      { id: 1, name: "Фармація, промислова фармація" },
-    ],
-  },
-  {
-    id: 4,
-    name: "Фармація, промислова фармація (заочна форма) 4",
-    createdAt: "08.12.23",
-    plans: [
-      {
-        id: 1,
-        name: "Фармація, промислова фармація, Фаховий молодший бакалавр",
-      },
-      { id: 1, name: "Фармація, промислова фармація" },
-      { id: 1, name: "Фармація, промислова фармація" },
-      {
-        id: 1,
-        name: "Фармація, промислова фармація, Фаховий молодший бакалавр",
-      },
-      { id: 1, name: "Фармація, промислова фармація" },
-      { id: 1, name: "Фармація, промислова фармація" },
-      {
-        id: 1,
-        name: "Фармація, промислова фармація, Фаховий молодший бакалавр",
-      },
-      { id: 1, name: "Фармація, промислова фармація" },
-      { id: 1, name: "Фармація, промислова фармація" },
-      {
-        id: 1,
-        name: "Фармація, промислова фармація, Фаховий молодший бакалавр",
-      },
-      { id: 1, name: "Фармація, промислова фармація" },
-      { id: 1, name: "Фармація, промислова фармація" },
-    ],
-  },
-  {
-    id: 5,
-    name: "Технології медичної діагностики та лікування 5",
-    createdAt: "08.12.23",
-    plans: [
-      {
-        id: 1,
-        name: "Фармація, промислова фармація, Фаховий молодший бакалавр",
-      },
-      { id: 1, name: "Фармація, промислова фармація" },
-      { id: 1, name: "Фармація, промислова фармація" },
-      {
-        id: 1,
-        name: "Фармація, промислова фармація, Фаховий молодший бакалавр",
-      },
-      { id: 1, name: "Фармація, промислова фармація" },
-      { id: 1, name: "Фармація, промислова фармація" },
-      {
-        id: 1,
-        name: "Фармація, промислова фармація, Фаховий молодший бакалавр",
-      },
-      { id: 1, name: "Фармація, промислова фармація" },
-      { id: 1, name: "Фармація, промислова фармація" },
-      {
-        id: 1,
-        name: "Фармація, промислова фармація, Фаховий молодший бакалавр",
-      },
-      { id: 1, name: "Фармація, промислова фармація" },
-      { id: 1, name: "Фармація, промислова фармація" },
-    ],
-  },
-  {
-    id: 6,
-    name: "Фармація, промислова фармація 6",
-    createdAt: "08.12.23",
-    plans: [
-      {
-        id: 1,
-        name: "Фармація, промислова фармація, Фаховий молодший бакалавр",
-      },
-      { id: 1, name: "Фармація, промислова фармація" },
-      { id: 1, name: "Фармація, промислова фармація" },
-      {
-        id: 1,
-        name: "Фармація, промислова фармація, Фаховий молодший бакалавр",
-      },
-      { id: 1, name: "Фармація, промислова фармація" },
-      { id: 1, name: "Фармація, промислова фармація" },
-      {
-        id: 1,
-        name: "Фармація, промислова фармація, Фаховий молодший бакалавр",
-      },
-      { id: 1, name: "Фармація, промислова фармація" },
-      { id: 1, name: "Фармація, промислова фармація" },
-      {
-        id: 1,
-        name: "Фармація, промислова фармація, Фаховий молодший бакалавр",
-      },
-      { id: 1, name: "Фармація, промислова фармація" },
-      { id: 1, name: "Фармація, промислова фармація" },
-    ],
-  },
-  {
-    id: 7,
-    name: "Менеджмент 7",
-    createdAt: "08.12.23",
-    plans: [
-      {
-        id: 1,
-        name: "Фармація, промислова фармація, Фаховий молодший бакалавр",
-      },
-      { id: 1, name: "Фармація, промислова фармація" },
-      { id: 1, name: "Фармація, промислова фармація" },
-      {
-        id: 1,
-        name: "Фармація, промислова фармація, Фаховий молодший бакалавр",
-      },
-      { id: 1, name: "Фармація, промислова фармація" },
-      { id: 1, name: "Фармація, промислова фармація" },
-      {
-        id: 1,
-        name: "Фармація, промислова фармація, Фаховий молодший бакалавр",
-      },
-      { id: 1, name: "Фармація, промислова фармація" },
-      { id: 1, name: "Фармація, промислова фармація" },
-      {
-        id: 1,
-        name: "Фармація, промислова фармація, Фаховий молодший бакалавр",
-      },
-      { id: 1, name: "Фармація, промислова фармація" },
-      { id: 1, name: "Фармація, промислова фармація" },
-    ],
-  },
-];
+import styles from "./PlansPage.module.scss"
+import { useAppDispatch } from "../../redux/store"
+import Title from "../../components/ui/Title/Title"
+import { useOutside } from "../../hooks/useOutside"
+import Button from "../../components/ui/Button/Button"
+import { LoadingStatusTypes } from "../../redux/appTypes"
+import { plansSelector } from "../../redux/plans/plansSlice"
+import Skeleton from "../../components/ui/Skeleton/Skeleton"
+import { getPlansCategories } from "../../redux/plans/plansAsyncActions"
+import PlanCategoryItem from "../../components/PlansPage/PlanCategoryItem"
+import PlanModals, { PlanModalsType } from "../../components/PlansPage/PlanModals"
 
 const PlansPage = () => {
-  const { colorMode } = React.useContext(ThemeContext);
+  const dispatch = useAppDispatch()
 
-  const dispatch = useAppDispatch();
+  const { loadingStatus, plansCategories } = useSelector(plansSelector)
 
-  const { loadingStatus, plansCategories } = useSelector(plansSelector);
+  const [modalType, setModalType] = React.useState<PlanModalsType>("add-plan")
 
-  const [openCategory, setOpenCategory] = React.useState<
-    (typeof plans)[0] | null
-  >(null);
-
-  const [modalType, setModalType] = React.useState<PlanModalsType>("add-plan");
+  const [openCategory, setOpenCategory] = React.useState<number | null>(null)
 
   const [selectedPlanCategory, setSelectedPlanCategory] = React.useState<{
-    id: number;
-    name: string;
-  } | null>(null);
+    id: number
+    name: string
+  } | null>(null)
 
-  const [selectedPlanId, setSelectedPlanId] = React.useState<number | null>(
-    null
-  );
+  const [selectedPlanId, setSelectedPlanId] = React.useState<number | null>(null)
 
-  const {
-    ref: ref,
-    isShow: isModalShow,
-    setIsShow: setIsModalShow,
-  } = useOutside(false);
+  const { ref: ref, isShow: isModalShow, setIsShow: setIsModalShow } = useOutside(false)
 
   React.useEffect(() => {
     if (!plansCategories) {
-      dispatch(getPlansCategories());
+      dispatch(getPlansCategories())
     }
-  }, []);
-
-  const handleChangeOpenCategory = (id: number) => {
-    if (!openCategory) {
-      setOpenCategory(plans[id - 1]);
-    } else {
-      if (id === openCategory.id) {
-        setOpenCategory(null);
-      } else {
-        setOpenCategory(plans[id - 1]);
-      }
-    }
-  };
+  }, [])
 
   const onOpenModal = (
     modalType: PlanModalsType,
     planCategory: { id: number; name: string } | null
   ) => {
-    setModalType(modalType);
-    setIsModalShow(true);
-    setSelectedPlanCategory(planCategory);
-  };
+    setModalType(modalType)
+    setIsModalShow(true)
+    setSelectedPlanCategory(planCategory)
+  }
 
-  const onDeleteCategory = (id: number) => {
-    if (window.confirm("Ви дійсно хочете видалити категорію?")) {
-      dispatch(deletePlanCategory(id));
+  const handleChangeOpenCategory = (id: number) => {
+    if (id === openCategory) {
+      // 2 однакових функції:
+      setOpenCategory(null)
+      setSelectedPlanId(null)
+    } else {
+      setOpenCategory(id)
+      setSelectedPlanId(id)
     }
-  };
+  }
+
+  // const onDeleteCategory = (id: number) => {
+  //   if (window.confirm("Ви дійсно хочете видалити категорію?")) {
+  //     dispatch(deletePlanCategory(id))
+  //   }
+  // }
 
   return (
     <>
@@ -332,16 +87,45 @@ const PlansPage = () => {
         <div className={styles["plans-wrapper"]}>
           {!plansCategories ? (
             <>
-              <Skeleton width="100%" height="115px" />
-              <Skeleton width="100%" height="115px" />
-              <Skeleton width="100%" height="115px" />
-              <Skeleton width="100%" height="115px" />
-              <Skeleton width="100%" height="115px" />
-              <Skeleton width="100%" height="115px" />
+              {loadingStatus === LoadingStatusTypes.ERROR ? (
+                <Title Variant="h4">Помилка при завантаженні даних</Title>
+              ) : (
+                Array(6)
+                  .fill(null)
+                  .map((_, index) => <Skeleton key={index} width="100%" height="115px" />)
+              )}
             </>
           ) : (
             plansCategories.map((el) => (
-              <Paper
+              <PlanCategoryItem
+                key={el.id}
+                category={el}
+                onOpenModal={onOpenModal}
+                openCategory={openCategory}
+                handleChangeOpenCategory={handleChangeOpenCategory}
+              />
+            ))
+          )}
+        </div>
+
+        <div className={styles["add-plan-wrapper"]}>
+          <Button
+            variant="outlined"
+            onClick={() => onOpenModal("add-category", null)}
+            disabled={loadingStatus === LoadingStatusTypes.LOADING}
+          >
+            Додати нову категорiю
+          </Button>
+        </div>
+      </div>
+    </>
+  )
+}
+
+export default PlansPage
+
+/* 
+<Paper
                 classNames={cn(styles["plan-category"], {
                   [styles["open"]]: el.id === openCategory?.id,
                   [styles["light"]]: colorMode === "light",
@@ -355,6 +139,7 @@ const PlansPage = () => {
                         Variant="h6"
                         align="left"
                         classNames={styles["plan-category-name"]}
+                        title={el.name}
                       >
                         {el.name}
                       </Title>
@@ -364,11 +149,7 @@ const PlansPage = () => {
                         onClick={() => handleChangeOpenCategory(el.id)}
                       >
                         <ArrowDown
-                          style={
-                            openCategory?.id === el.id
-                              ? { transform: "rotate(180deg)" }
-                              : {}
-                          }
+                          style={openCategory?.id === el.id ? { transform: "rotate(180deg)" } : {}}
                         />
                       </IconButton>
                     </div>
@@ -392,9 +173,7 @@ const PlansPage = () => {
                       </div>
                       <div
                         className={styles["plan-category-actions-item"]}
-                        onClick={() =>
-                          onOpenModal("add-plan", { id: el.id, name: el.name })
-                        }
+                        onClick={() => onOpenModal("add-plan", { id: el.id, name: el.name })}
                       >
                         Додати
                       </div>
@@ -407,64 +186,49 @@ const PlansPage = () => {
                         [styles["light"]]: colorMode === "light",
                       })}
                     >
-                      {el.plans.map((plan) => (
-                        <div className={styles["plan"]} key={plan.id}>
-                          <NavLink
-                            className={styles["plan-name"]}
-                            to={`/plan/${plan.id}`}
-                          >
-                            {plan.name}
-                          </NavLink>
+                      {el.plans && el.plans.length ? (
+                        el.plans.map((plan) => (
+                          <div className={styles["plan"]} key={plan.id}>
+                            <NavLink className={styles["plan-name"]} to={`/plan/${plan.id}`}>
+                              {plan.name}
+                            </NavLink>
 
-                          <div className={styles["plan-controls"]}>
-                            <IconButton
-                              onClick={() =>
-                                onOpenModal("update-plan", {
-                                  id: el.id,
-                                  name: el.name,
-                                })
-                              }
-                              sx={{
-                                marginRight: "10px",
-                              }}
-                            >
-                              <RenameIcon size={20} />
-                            </IconButton>
+                            <div className={styles["plan-controls"]}>
+                              <IconButton
+                                onClick={() =>
+                                  onOpenModal("update-plan", {
+                                    id: el.id,
+                                    name: el.name,
+                                  })
+                                }
+                                sx={{
+                                  marginRight: "10px",
+                                }}
+                              >
+                                <RenameIcon size={20} />
+                              </IconButton>
 
-                            <IconButton
-                              onClick={() => {
-                                setSelectedPlanId(plan.id);
-                                onOpenModal("update-plan", {
-                                  id: el.id,
-                                  name: el.name,
-                                });
-                              }}
-                            >
-                              <DeleteIcon size={20} />
-                            </IconButton>
+                              <IconButton
+                                onClick={() => {
+                                  setSelectedPlanId(plan.id)
+                                  onOpenModal("update-plan", {
+                                    id: el.id,
+                                    name: el.name,
+                                  })
+                                }}
+                              >
+                                <DeleteIcon size={20} />
+                              </IconButton>
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        ))
+                      ) : (
+                        <Title Variant="h6" sx={{ padding: "20px 0" }}>
+                          Пусто
+                        </Title>
+                      )}
                     </div>
                   )}
                 </>
               </Paper>
-            ))
-          )}
-        </div>
-
-        <div className={styles["add-plan-wrapper"]}>
-          <Button
-            variant="outlined"
-            onClick={() => onOpenModal("add-category", null)}
-            disabled={loadingStatus === LoadingStatusTypes.LOADING}
-          >
-            Додати нову категорiю
-          </Button>
-        </div>
-      </div>
-    </>
-  );
-};
-
-export default PlansPage;
+*/

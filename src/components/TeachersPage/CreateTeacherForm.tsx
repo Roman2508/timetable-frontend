@@ -1,32 +1,29 @@
-import React from "react";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import React from "react"
+import { Controller, SubmitHandler, useForm } from "react-hook-form"
 
-import Input from "../ui/Input/Input";
-import Select from "../ui/Select/Select";
-import Button from "../ui/Button/Button";
-import styles from "./TeachersPage.module.scss";
-import { useAppDispatch } from "../../redux/store";
-import { LoadingStatusTypes } from "../../redux/appTypes";
-import { TeachersCategoryType } from "../../redux/teachers/teachersTypes";
-import { createTeacher } from "../../redux/teachers/teachersAsyncActions";
+import Input from "../ui/Input/Input"
+import Select from "../ui/Select/Select"
+import Button from "../ui/Button/Button"
+import styles from "./TeachersPage.module.scss"
+import { useAppDispatch } from "../../redux/store"
+import { TeachersCategoryType } from "../../redux/teachers/teachersTypes"
+import { createTeacher } from "../../redux/teachers/teachersAsyncActions"
 
 export type TeacherFieldsType = {
-  firstName: string;
-  middleName: string;
-  lastName: string;
-  category: { value: string; label: string };
-};
+  firstName: string
+  middleName: string
+  lastName: string
+  category: { value: string; label: string }
+}
 
 interface ICreateTeacherFormProps {
-  teachersCategories: TeachersCategoryType[] | null;
-  loadingStatus: LoadingStatusTypes;
+  teachersCategories: TeachersCategoryType[] | null
 }
 
 const CreateTeacherForm: React.FC<ICreateTeacherFormProps> = ({
-  loadingStatus,
   teachersCategories,
 }) => {
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch()
 
   const {
     watch,
@@ -34,11 +31,11 @@ const CreateTeacherForm: React.FC<ICreateTeacherFormProps> = ({
     register,
     resetField,
     clearErrors,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     handleSubmit,
   } = useForm<TeacherFieldsType>({
     mode: "onChange",
-  });
+  })
 
   const onSubmit: SubmitHandler<TeacherFieldsType> = async (data) => {
     const newTeacher = {
@@ -46,18 +43,18 @@ const CreateTeacherForm: React.FC<ICreateTeacherFormProps> = ({
       middleName: data.middleName,
       lastName: data.lastName,
       category: Number(data.category.value),
-    };
-    await dispatch(createTeacher(newTeacher));
-    onClearFields();
-  };
+    }
+    await dispatch(createTeacher(newTeacher))
+    onClearFields()
+  }
 
   const onClearFields = () => {
-    resetField("firstName");
-    resetField("middleName");
-    resetField("lastName");
-    resetField("category");
-    clearErrors();
-  };
+    resetField("firstName")
+    resetField("middleName")
+    resetField("lastName")
+    resetField("category")
+    clearErrors()
+  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -102,7 +99,7 @@ const CreateTeacherForm: React.FC<ICreateTeacherFormProps> = ({
                   value: String(el.id),
                   label: el.name,
                 }))
-              : [];
+              : []
 
             return (
               <Select
@@ -113,21 +110,15 @@ const CreateTeacherForm: React.FC<ICreateTeacherFormProps> = ({
                 selectValue={value}
                 isError={!!errors.category}
                 errorMessage={errors.category?.message}
-                onChange={(val: { value: string; label: string }) =>
-                  onChange(val)
-                }
+                onChange={(val: { value: string; label: string }) => onChange(val)}
               />
-            );
+            )
           }}
         />
       </div>
 
       <div className={styles["teachers-controls"]}>
-        <Button
-          sx={{ marginRight: "20px" }}
-          variant="outlined"
-          disabled={loadingStatus === LoadingStatusTypes.LOADING}
-        >
+        <Button sx={{ marginRight: "20px" }} variant="outlined" disabled={isSubmitting}>
           Зберегти
         </Button>
 
@@ -136,13 +127,13 @@ const CreateTeacherForm: React.FC<ICreateTeacherFormProps> = ({
           color="gray"
           type="button"
           onClick={onClearFields}
-          disabled={loadingStatus === LoadingStatusTypes.LOADING}
+          disabled={isSubmitting}
         >
           Очистити
         </Button>
       </div>
     </form>
-  );
-};
+  )
+}
 
-export default CreateTeacherForm;
+export default CreateTeacherForm

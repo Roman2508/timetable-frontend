@@ -1,44 +1,42 @@
-import { SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form"
 
-import Input from "../ui/Input/Input";
-import Button from "../ui/Button/Button";
-import styles from "./TeachersPage.module.scss";
-import { useAppDispatch } from "../../redux/store";
-import { LoadingStatusTypes } from "../../redux/appTypes";
-import { createAuditoryCategory } from "../../redux/auditories/auditoriesAsyncActions";
-import { createTeacherCategory } from "../../redux/teachers/teachersAsyncActions";
+import Input from "../ui/Input/Input"
+import Button from "../ui/Button/Button"
+import styles from "./TeachersPage.module.scss"
+import { useAppDispatch } from "../../redux/store"
+import { LoadingStatusTypes } from "../../redux/appTypes"
+import { createTeacherCategory } from "../../redux/teachers/teachersAsyncActions"
 
 interface ICreateTeachersCategoryFormProps {
-  loadingStatus: LoadingStatusTypes;
-  setUpdateCategoryModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  setUpdateCategoryModalVisible: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const CreateTeachersCategoryForm: React.FC<
-  ICreateTeachersCategoryFormProps
-> = ({ loadingStatus, setUpdateCategoryModalVisible }) => {
-  const dispatch = useAppDispatch();
+const CreateTeachersCategoryForm: React.FC<ICreateTeachersCategoryFormProps> = ({
+  setUpdateCategoryModalVisible,
+}) => {
+  const dispatch = useAppDispatch()
 
   const {
     watch,
     register,
-    getValues,
+    // getValues,
     resetField,
     clearErrors,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     handleSubmit,
   } = useForm<{ name: string }>({
     mode: "onSubmit",
-  });
+  })
 
   const onSubmit: SubmitHandler<{ name: string }> = async (data) => {
-    await dispatch(createTeacherCategory({ name: data.name }));
-    onClearFeild();
-  };
+    await dispatch(createTeacherCategory({ name: data.name }))
+    onClearFeild()
+  }
 
   const onClearFeild = () => {
-    resetField("name");
-    clearErrors();
-  };
+    resetField("name")
+    clearErrors()
+  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -58,7 +56,7 @@ const CreateTeachersCategoryForm: React.FC<
         <Button
           variant="outlined"
           type="button"
-          disabled={loadingStatus === LoadingStatusTypes.LOADING}
+          disabled={isSubmitting}
           onClick={() => setUpdateCategoryModalVisible(true)}
         >
           Редагувати
@@ -69,7 +67,7 @@ const CreateTeachersCategoryForm: React.FC<
             sx={{ marginRight: "20px" }}
             variant="outlined"
             type="submit"
-            disabled={loadingStatus === LoadingStatusTypes.LOADING}
+            disabled={isSubmitting}
           >
             Зберегти
           </Button>
@@ -79,14 +77,14 @@ const CreateTeachersCategoryForm: React.FC<
             color="gray"
             type="button"
             onClick={onClearFeild}
-            disabled={loadingStatus === LoadingStatusTypes.LOADING}
+            disabled={isSubmitting}
           >
             Очистити
           </Button>
         </div>
       </div>
     </form>
-  );
-};
+  )
+}
 
-export default CreateTeachersCategoryForm;
+export default CreateTeachersCategoryForm

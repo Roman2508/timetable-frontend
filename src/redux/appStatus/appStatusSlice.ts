@@ -23,7 +23,8 @@ const appStatusSlice = createSlice({
       state.status = action.payload.status
     },
     clearAppAlert(state) {
-      state = initialState
+      state.message = ""
+      state.status = ""
     },
   },
 })

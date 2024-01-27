@@ -27,7 +27,7 @@ const instanse = axios.create({
 instanse.interceptors.request.use((config) => {
   if (config.headers) {
     config.headers.Authorization = String(
-      "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAzNjgwMjI5LCJleHAiOjE3MDYyNzIyMjl9.Qmd-W74a1o08Ft5KicmoCfuai6D2XUPSmlfFv29aPOg"
+      "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzA2MzQ3Mjc4LCJleHAiOjE3MDg5MzkyNzh9.l_raUUxomtd7HaPYAiMTm96Con5DeEAY8n5eDjgZbQI"
     )
     // config.headers.Authorization = String(globalThis.localStorage.getItem('token'))
 
@@ -118,14 +118,14 @@ export const plansAPI = {
 
   /* plans */
   createPlan(payload: CreatePlanPayloadType) {
-    return instanse.post<PlansType>("/plan", payload)
+    return instanse.post<PlansType>("/plans", payload)
   },
   updatePlan(payload: { name: string; id: number }) {
-    return instanse.patch<PlansType>(`/plan/${payload.id}`, {
+    return instanse.patch<PlansType>(`/plans/${payload.id}`, {
       name: payload.name,
     })
   },
   deletePlan(id: number) {
-    return instanse.delete<number>(`/plan/${id}`)
+    return instanse.delete<number>(`/plans/${id}`)
   },
 }

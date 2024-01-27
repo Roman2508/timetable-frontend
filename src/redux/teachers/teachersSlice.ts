@@ -20,7 +20,11 @@ const teachersInitialState: TeachersInitialState = {
 const teachersSlice = createSlice({
   name: "teachers",
   initialState: teachersInitialState,
-  reducers: {},
+  reducers: {
+    setLoadingStatus(state, action) {
+      state.loadingStatus = action.payload
+    },
+  },
   extraReducers: (builder) => {
     /* --- categories --- */
     builder.addCase(
@@ -28,7 +32,6 @@ const teachersSlice = createSlice({
       (state, action: PayloadAction<TeachersCategoryType[]>) => {
         state.teachersCategories = action.payload
         state.loadingStatus = LoadingStatusTypes.SUCCESS
-        // toast.success("Викладачi завантаженi")
       }
     )
 
@@ -39,6 +42,7 @@ const teachersSlice = createSlice({
         if (!state.teachersCategories) return
 
         state.teachersCategories = [...state.teachersCategories, action.payload]
+        state.loadingStatus = LoadingStatusTypes.SUCCESS
       }
     )
 
@@ -57,6 +61,7 @@ const teachersSlice = createSlice({
         })
 
         state.teachersCategories = newCategories
+        state.loadingStatus = LoadingStatusTypes.SUCCESS
       }
     )
 
@@ -67,6 +72,7 @@ const teachersSlice = createSlice({
       const newCategories = state.teachersCategories.filter((el) => el.id !== action.payload)
 
       state.teachersCategories = newCategories
+      state.loadingStatus = LoadingStatusTypes.SUCCESS
     })
 
     /* --- teachers --- */
@@ -84,12 +90,15 @@ const teachersSlice = createSlice({
       })
 
       state.teachersCategories = newTeacherCategories
+      state.loadingStatus = LoadingStatusTypes.SUCCESS
     })
 
     /* updateTeacher */
     builder.addCase(updateTeacher.fulfilled, (state, action: PayloadAction<TeachersType>) => {
       if (!state.teachersCategories) return
+
       alert("Не змінюється категорія викладача при оновленні в redux")
+
       const newTeachersCategories = state.teachersCategories.map((el) => {
         if (el.id === action.payload.category.id) {
           const newTeachers = el.teachers.map((teacher) => {
@@ -107,6 +116,7 @@ const teachersSlice = createSlice({
       })
 
       state.teachersCategories = newTeachersCategories
+      state.loadingStatus = LoadingStatusTypes.SUCCESS
     })
 
     /* deleteTeacher */
@@ -120,9 +130,12 @@ const teachersSlice = createSlice({
       })
 
       state.teachersCategories = updatedCategories
+      state.loadingStatus = LoadingStatusTypes.SUCCESS
     })
   },
 })
+
+export const { setLoadingStatus } = teachersSlice.actions
 
 export default teachersSlice.reducer
 

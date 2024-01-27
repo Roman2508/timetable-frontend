@@ -1,16 +1,16 @@
-import React from 'react'
-import { Theme, toast } from 'react-toastify'
-import { Controller, SubmitHandler, useForm } from 'react-hook-form'
+import React from "react"
+import { Theme, toast } from "react-toastify"
+import { Controller, SubmitHandler, useForm } from "react-hook-form"
 
-import Input from '../ui/Input/Input'
-import Select from '../ui/Select/Select'
-import Button from '../ui/Button/Button'
-import styles from './AuditoriesPage.module.scss'
-import { AuditoryCategoriesTypes } from '../../redux/auditories/auditoriesTypes'
-import { useAppDispatch } from '../../redux/store'
-import { createAuditory } from '../../redux/auditories/auditoriesAsyncActions'
-import { LoadingStatusTypes } from '../../redux/appTypes'
-import { ThemeContext } from '../../App'
+import Input from "../ui/Input/Input"
+import Select from "../ui/Select/Select"
+import Button from "../ui/Button/Button"
+import styles from "./AuditoriesPage.module.scss"
+import { AuditoryCategoriesTypes } from "../../redux/auditories/auditoriesTypes"
+import { useAppDispatch } from "../../redux/store"
+import { createAuditory } from "../../redux/auditories/auditoriesAsyncActions"
+import { LoadingStatusTypes } from "../../redux/appTypes"
+import { ThemeContext } from "../../App"
 
 export type AuditoryFieldsType = {
   name: string
@@ -23,7 +23,10 @@ interface ICreateAuditoryFormProps {
   loadingStatus: LoadingStatusTypes
 }
 
-const CreateAuditoryForm: React.FC<ICreateAuditoryFormProps> = ({ loadingStatus, auditoriCategories }) => {
+const CreateAuditoryForm: React.FC<ICreateAuditoryFormProps> = ({
+  loadingStatus,
+  auditoriCategories,
+}) => {
   const dispatch = useAppDispatch()
 
   const {
@@ -32,10 +35,10 @@ const CreateAuditoryForm: React.FC<ICreateAuditoryFormProps> = ({ loadingStatus,
     register,
     resetField,
     clearErrors,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     handleSubmit,
   } = useForm<AuditoryFieldsType>({
-    mode: 'onChange',
+    mode: "onChange",
   })
 
   const onSubmit: SubmitHandler<AuditoryFieldsType> = async (data) => {
@@ -49,34 +52,34 @@ const CreateAuditoryForm: React.FC<ICreateAuditoryFormProps> = ({ loadingStatus,
   }
 
   const onClearFields = () => {
-    resetField('name')
-    resetField('seatsNumber')
-    resetField('category')
+    resetField("name")
+    resetField("seatsNumber")
+    resetField("category")
     clearErrors()
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className={styles['auditories-form']}>
+      <div className={styles["auditories-form"]}>
         <Input
           width="245px"
           label="Назва"
-          value={watch('name')}
+          value={watch("name")}
           labelBackColor="dark"
           isError={!!errors.name}
           errorMessage={errors.name?.message}
-          {...register('name', { required: true })}
+          {...register("name", { required: true })}
         />
 
         <Input
           width="245px"
           htmlType="number"
-          value={watch('seatsNumber')}
+          value={watch("seatsNumber")}
           labelBackColor="dark"
           label="Кількість місць"
           isError={!!errors.seatsNumber}
           errorMessage={errors.seatsNumber?.message}
-          {...register('seatsNumber', { required: true })}
+          {...register("seatsNumber", { required: true })}
         />
 
         <Controller
@@ -104,8 +107,8 @@ const CreateAuditoryForm: React.FC<ICreateAuditoryFormProps> = ({ loadingStatus,
         />
       </div>
 
-      <div className={styles['auditories-controls']}>
-        <Button sx={{ marginRight: '20px' }} variant="outlined" disabled={loadingStatus === LoadingStatusTypes.LOADING}>
+      <div className={styles["auditories-controls"]}>
+        <Button sx={{ marginRight: "20px" }} variant="outlined" disabled={isSubmitting}>
           Зберегти
         </Button>
 
@@ -114,7 +117,7 @@ const CreateAuditoryForm: React.FC<ICreateAuditoryFormProps> = ({ loadingStatus,
           color="gray"
           type="button"
           onClick={onClearFields}
-          disabled={loadingStatus === LoadingStatusTypes.LOADING}
+          disabled={isSubmitting}
         >
           Очистити
         </Button>

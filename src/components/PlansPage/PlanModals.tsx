@@ -1,13 +1,13 @@
-import React from "react";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import React from "react"
+import { Controller, SubmitHandler, useForm } from "react-hook-form"
 
-import Modal from "../ui/Modal/Modal";
-import Input from "../ui/Input/Input";
-import Button from "../ui/Button/Button";
-import styles from "./PlansPage.module.scss";
-import { useAppDispatch } from "../../redux/store";
-import Select from "../ui/Select/Select";
-import { PlansCategoriesType } from "../../redux/plans/plansTypes";
+import Modal from "../ui/Modal/Modal"
+import Input from "../ui/Input/Input"
+import Button from "../ui/Button/Button"
+import styles from "./PlansPage.module.scss"
+import { useAppDispatch } from "../../redux/store"
+import Select from "../ui/Select/Select"
+import { PlansCategoriesType } from "../../redux/plans/plansTypes"
 import {
   createPlan,
   createPlanCategory,
@@ -15,41 +15,39 @@ import {
   deletePlanCategory,
   updatePlan,
   updatePlanCategory,
-} from "../../redux/plans/plansAsyncActions";
+} from "../../redux/plans/plansAsyncActions"
 
 type FieldsType = {
-  name: string;
-  category?: { value: string; label: string };
-};
+  name: string
+  category?: { value: string; label: string }
+}
 
-export type PlanModalsType =
-  | "add-category"
-  | "update-category"
-  | "add-plan"
-  | "update-plan";
+export type PlanModalsType = "add-category" | "update-category" | "add-plan" | "update-plan"
 
 interface IPlanModalsProps {
-  isShow: boolean;
-  modalType: PlanModalsType;
-  selectedPlanId: number | null;
-  selectedPlanCategory: { id: number; name: string } | null;
-  plansCategories: PlansCategoriesType[] | null;
-  setIsShow: React.Dispatch<React.SetStateAction<boolean>>;
+  isShow: boolean
+  modalType: PlanModalsType
+  selectedPlanId: number | null
+  selectedPlanCategory: { id: number; name: string } | null
+  plansCategories: PlansCategoriesType[] | null
+  setIsShow: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const PlanModals = React.forwardRef<HTMLDivElement, IPlanModalsProps>(
   (
-    {
-      isShow,
-      modalType,
-      setIsShow,
-      selectedPlanId,
-      plansCategories,
-      selectedPlanCategory,
-    },
+    { isShow, modalType, setIsShow, selectedPlanId, plansCategories, selectedPlanCategory },
     ref
   ) => {
-    const dispatch = useAppDispatch();
+    const dispatch = useAppDispatch()
+
+    const modalTitle =
+      modalType === "add-category"
+        ? "Додати нову категорію"
+        : modalType === "update-category"
+        ? "Оновити категорію"
+        : modalType === "add-plan"
+        ? "Додати новий план"
+        : "Оновити план"
 
     const {
       watch,
@@ -61,73 +59,74 @@ const PlanModals = React.forwardRef<HTMLDivElement, IPlanModalsProps>(
       handleSubmit,
     } = useForm<FieldsType>({
       mode: "onChange",
-    });
+    })
 
     const onSubmit: SubmitHandler<FieldsType> = async (data) => {
-      const payload = { name: data.name };
-      setIsShow(false);
+      const payload = { name: data.name }
+      setIsShow(false)
 
       if (modalType === "add-category") {
-        await dispatch(createPlanCategory(payload));
+        await dispatch(createPlanCategory(payload))
         //
       } else if (modalType === "update-category" && selectedPlanCategory) {
-        await dispatch(
-          updatePlanCategory({ ...payload, id: selectedPlanCategory.id })
-        );
+        await dispatch(updatePlanCategory({ ...payload, id: selectedPlanCategory.id }))
         //
       } else if (modalType === "add-plan" && selectedPlanCategory) {
-        await dispatch(
-          createPlan({ ...payload, categoryId: selectedPlanCategory.id })
-        );
+        await dispatch(createPlan({ ...payload, categoryId: selectedPlanCategory.id }))
       } else if (modalType === "update-plan" && selectedPlanCategory) {
-        await dispatch(updatePlan({ ...payload, id: selectedPlanCategory.id }));
+        await dispatch(updatePlan({ ...payload, id: selectedPlanCategory.id }))
         //
       }
-      resetField("name");
-      resetField("category");
-    };
+      resetField("name")
+      resetField("category")
+    }
 
     const onDeleteCategory = async () => {
       if (!selectedPlanCategory) {
-        alert("Виберiть категорoю");
-        return;
+        alert("Виберiть категорoю")
+        return
       }
 
       if (modalType === "update-category" && selectedPlanCategory) {
-        if (!window.confirm("Ви дійсно хочете видалити категорію?")) return;
+        if (!window.confirm("Ви дійсно хочете видалити категорію?")) return
 
-        setIsShow(false);
+        setIsShow(false)
 
-        await dispatch(deletePlanCategory(selectedPlanCategory.id));
+        await dispatch(deletePlanCategory(selectedPlanCategory.id))
 
-        resetField("name");
-        resetField("category");
-        return;
+        resetField("name")
+        resetField("category")
+        return
       }
 
       if (modalType === "update-plan" && selectedPlanId) {
-        if (!window.confirm("Ви дійсно хочете видалити план?")) return;
+        if (!window.confirm("Ви дійсно хочете видалити план?")) return
 
-        setIsShow(false);
+        setIsShow(false)
 
-        await dispatch(deletePlan(selectedPlanId));
+        await dispatch(deletePlan(selectedPlanId))
 
-        resetField("name");
-        resetField("category");
+        resetField("name")
+        resetField("category")
       }
-    };
+    }
 
     React.useEffect(() => {
-      if (!selectedPlanCategory) return;
-      setValue("name", String(selectedPlanCategory.name));
-    }, [selectedPlanCategory]);
+      if (!selectedPlanCategory) return
+
+      if (modalType === "update-category" || modalType === "update-plan") {
+        setValue("name", String(selectedPlanCategory.name))
+      } else {
+        setValue("name", "")
+      }
+    }, [selectedPlanCategory])
 
     return (
       <Modal
         isShow={isShow}
         setIsShow={setIsShow}
         classNames={styles["modal-wrapper"]}
-        modalTitle="Додати нову категорію"
+        modalTitle={modalTitle}
         ref={ref}
       >
         <form style={{ marginTop: "20px" }} onSubmit={handleSubmit(onSubmit)}>
@@ -151,7 +150,7 @@ const PlanModals = React.forwardRef<HTMLDivElement, IPlanModalsProps>(
                       value: String(el.id),
                       label: el.name,
                     }))
-                  : [];
+                  : []
 
                 return (
                   <Select
@@ -162,11 +161,9 @@ const PlanModals = React.forwardRef<HTMLDivElement, IPlanModalsProps>(
                     selectValue={value}
                     isError={!!errors.category}
                     errorMessage={errors.category?.message}
-                    onChange={(val: { value: string; label: string }) =>
-                      onChange(val)
-                    }
+                    onChange={(val: { value: string; label: string }) => onChange(val)}
                   />
-                );
+                )
               }}
             />
           )}
@@ -186,17 +183,14 @@ const PlanModals = React.forwardRef<HTMLDivElement, IPlanModalsProps>(
               </Button>
             )}
 
-            <Button
-              variant="outlined"
-              disabled={!watch("name") || isSubmitting}
-            >
+            <Button variant="outlined" disabled={!watch("name") || isSubmitting}>
               Зберегти
             </Button>
           </div>
         </form>
       </Modal>
-    );
+    )
   }
-);
+)
 
-export default PlanModals;
+export default PlanModals

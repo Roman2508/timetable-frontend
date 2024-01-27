@@ -17,7 +17,7 @@ const AppAlert: React.FC = () => {
     if (!message || !status) return
 
     toast[status](message, { autoClose: 1500 })
-    clearAppAlert()
+    dispatch(clearAppAlert())
   }, [message, status, dispatch])
 
   return (

@@ -11,6 +11,7 @@ interface ITitleProps {
   sx?: React.CSSProperties
   children: JSX.Element | JSX.Element[] | string
   classNames?: string
+  [key: string]: any
 }
 
 const titleColors = {
@@ -27,6 +28,7 @@ const Title: React.FC<React.PropsWithChildren<ITitleProps>> = ({
   align = "center",
   classNames = "",
   sx = {},
+  ...propNames
 }) => {
   const { colorMode } = React.useContext(ThemeContext)
 
@@ -52,7 +54,7 @@ const Title: React.FC<React.PropsWithChildren<ITitleProps>> = ({
 
   return (
     <div className={cn(styles.titleWrapper, classNames)}>
-      <Variant style={{ color: titleColors[titleColor], textAlign: align, ...sx }}>
+      <Variant style={{ color: titleColors[titleColor], textAlign: align, ...sx }} {...propNames}>
         {children}
       </Variant>
     </div>

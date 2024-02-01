@@ -7,11 +7,15 @@ import {
   CreateTeacherPayloadType,
   UpdateTeacherPayloadType,
   CreatePlanPayloadType,
+  UpdateGroupPayloadType,
+  CreateEntityPayloadType,
+  UpdateEntityNamePayloadType,
 } from "./apiTypes"
 import axios from "axios"
 import { AuditoriesTypes, AuditoryCategoriesTypes } from "../redux/auditories/auditoriesTypes"
 import { TeachersCategoryType } from "../redux/teachers/teachersTypes"
 import { PlansCategoriesType, PlansType } from "../redux/plans/plansTypes"
+import { GroupCategoriesType, GroupsShortType, GroupsType } from "../redux/groups/groupsTypes"
 
 const instanse = axios.create({
   baseURL: "http://localhost:7777/",
@@ -127,5 +131,42 @@ export const plansAPI = {
   },
   deletePlan(id: number) {
     return instanse.delete<number>(`/plans/${id}`)
+  },
+}
+
+export const groupsAPI = {
+  /* categories */
+  getGroupsCategories() {
+    return instanse.get<GroupCategoriesType[]>("/group-categories")
+  },
+  createGroupCategory(payload: { name: string }) {
+    return instanse.post<GroupCategoriesType>("/group-categories", payload)
+  },
+  updateGroupCategory(payload: UpdateEntityNamePayloadType) {
+    return instanse.patch<GroupCategoriesType>(`/group-categories/${payload.id}`, {
+      name: payload.name,
+    })
+  },
+  deleteGroupCategory(id: number) {
+    return instanse.delete<number>(`/plan-categories/${id}`)
+  },
+
+  /* Groups */
+  createGroup(payload: CreateEntityPayloadType) {
+    return instanse.post<GroupsShortType>("/groups", payload)
+  },
+
+  // don`t exist !!!
+  updateGroupName(payload: UpdateEntityNamePayloadType) {
+    return instanse.patch<GroupsShortType>(`/groups/name/${payload.id}`, {
+      name: payload.name,
+    })
+  },
+  updateGroup(payload: UpdateGroupPayloadType) {
+    const { id, ...rest } = payload
+    return instanse.patch<GroupsType>(`/groups/${id}`, rest)
+  },
+  deleteGroup(id: number) {
+    return instanse.delete<number>(`/groups/${id}`)
   },
 }

@@ -4,12 +4,14 @@ import auditoriesSlise from "./auditories/auditoriesSlise"
 import teachersSlice from "./teachers/teachersSlice"
 import plansSlice from "./plans/plansSlice"
 import appStatusSlice from "./appStatus/appStatusSlice"
+import groupsSlice from "./groups/groupsSlice"
 
 export const store = configureStore({
   reducer: {
     auditories: auditoriesSlise,
     teachers: teachersSlice,
     plans: plansSlice,
+    groups: groupsSlice,
     appStatus: appStatusSlice,
   },
 })

@@ -1,43 +1,72 @@
+import { GroupsType } from "../redux/groups/groupsTypes"
+import { TeachersType } from "../redux/teachers/teachersTypes"
+
+/* Global */
+
+export type UpdateEntityNamePayloadType = {
+  id: number
+  name: string
+}
+
+export type CreateEntityPayloadType = {
+  name: string
+  categoryId: number
+}
+
 /* Auditories */
 
-import { TeachersType } from "../redux/teachers/teachersTypes";
-
 export type CreateAuditoryPayloadType = {
-  name: string;
-  seatsNumber: number;
-  category: number;
-};
+  name: string
+  seatsNumber: number
+  category: number
+}
 
 export type UpdateAuditoryCategoryPayloadType = {
-  id: number;
-  name: string;
-};
+  id: number
+  name: string
+}
 
 export type UpdateAuditoryPayloadType = {
-  id: Number;
-} & CreateAuditoryPayloadType;
+  id: Number
+} & CreateAuditoryPayloadType
 
 /* Teachers */
 
 export type CreateTeacherCategoryPayloadType = {
-  name: string;
-};
+  name: string
+}
 
 export type UpdateTeacherCategoryPayloadType = {
-  id: Number;
-} & CreateTeacherCategoryPayloadType;
+  id: Number
+} & CreateTeacherCategoryPayloadType
 
 export type CreateTeacherPayloadType = {
-  category: number;
-} & Omit<TeachersType, "id" | "category">;
+  category: number
+} & Omit<TeachersType, "id" | "category">
 
 export type UpdateTeacherPayloadType = {
-  category: number;
-} & Omit<TeachersType, "category">;
+  category: number
+} & Omit<TeachersType, "category">
 
 /* Plans */
 
 export type CreatePlanPayloadType = {
-  name: string;
-  categoryId: number;
-};
+  name: string
+  categoryId: number
+}
+
+/* Groups */
+
+export type UpdateGroupPayloadType = Pick<
+  GroupsType,
+  "id" | "name" | "students" | "courseNumber" | "yearOfAdmission" | "formOfEducation"
+> & { educationPlan: number; category: number }
+// {
+//   "name": "string",
+//   "students": 0,
+//   "courseNumber": 0,
+//   "yearOfAdmission": 0,
+//   "formOfEducation": "string",
+//   "educationPlan": 0
+//   "category": 0,
+// }

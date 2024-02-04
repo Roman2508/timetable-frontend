@@ -139,8 +139,8 @@ export const groupsAPI = {
   getGroupsCategories() {
     return instanse.get<GroupCategoriesType[]>("/group-categories")
   },
-  createGroupCategory(payload: { name: string }) {
-    return instanse.post<GroupCategoriesType>("/group-categories", payload)
+  createGroupCategory(payload: string) {
+    return instanse.post<GroupCategoriesType>("/group-categories", { name: payload })
   },
   updateGroupCategory(payload: UpdateEntityNamePayloadType) {
     return instanse.patch<GroupCategoriesType>(`/group-categories/${payload.id}`, {
@@ -148,20 +148,20 @@ export const groupsAPI = {
     })
   },
   deleteGroupCategory(id: number) {
-    return instanse.delete<number>(`/plan-categories/${id}`)
+    return instanse.delete<number>(`/group-categories/${id}`)
   },
 
   /* Groups */
   createGroup(payload: CreateEntityPayloadType) {
-    return instanse.post<GroupsShortType>("/groups", payload)
+    return instanse.post<GroupsType>("/groups", payload)
   },
 
   // don`t exist !!!
-  updateGroupName(payload: UpdateEntityNamePayloadType) {
-    return instanse.patch<GroupsShortType>(`/groups/name/${payload.id}`, {
-      name: payload.name,
-    })
-  },
+  // updateGroupName(payload: UpdateEntityNamePayloadType) {
+  //   return instanse.patch<GroupsShortType>(`/groups/name/${payload.id}`, {
+  //     name: payload.name,
+  //   })
+  // },
   updateGroup(payload: UpdateGroupPayloadType) {
     const { id, ...rest } = payload
     return instanse.patch<GroupsType>(`/groups/${id}`, rest)

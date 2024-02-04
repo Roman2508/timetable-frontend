@@ -69,7 +69,7 @@ const GroupPage = () => {
                 { value: "part-time", label: "Заочна" },
               ]}
               selectValue={t}
-              onChange={(e) => setT(e)}
+              onChange={(e: any) => setT(e)}
             />
             {/* <Input
               setValue={() => {}}

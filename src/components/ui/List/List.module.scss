@@ -27,6 +27,10 @@
   &:active {
     background-color: rgb(43, 47, 56);
   }
+
+  &.active {
+    background-color: #414857;
+  }
 }
 
 .itemLight {
@@ -36,5 +40,9 @@
 
   &:active {
     background-color: #d5d5d5;
+  }
+
+  &.active {
+    background-color: #eff0f0;
   }
 }

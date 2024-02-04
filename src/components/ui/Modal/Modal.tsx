@@ -1,33 +1,34 @@
-import React from 'react'
-import styles from './Modal.module.scss'
-import cn from 'classnames'
+import cn from "classnames"
+import { MdClose } from "react-icons/md"
+import React, { CSSProperties } from "react"
 
-import { MdClose } from 'react-icons/md'
-import { ThemeContext } from '../../../App'
+import styles from "./Modal.module.scss"
+import { ThemeContext } from "../../../App"
 
 interface IModalProps {
-  isShow: boolean
-  modalTitle?: string
-  setIsShow: React.Dispatch<React.SetStateAction<boolean>>
-  children: JSX.Element | JSX.Element[] | string
   ref: any
+  isShow: boolean
+  sx?: CSSProperties
+  modalTitle?: string
   classNames?: string
+  children: JSX.Element | JSX.Element[] | string
+  setIsShow: React.Dispatch<React.SetStateAction<boolean>>
   [propName: string]: any
 }
 
 const Modal = React.forwardRef<HTMLDivElement, React.PropsWithChildren<IModalProps>>(
-  ({ children, isShow, setIsShow, modalTitle, classNames = '', ...props }, ref) => {
+  ({ children, isShow, setIsShow, modalTitle, sx = {}, classNames = "", ...props }, ref) => {
     const { colorMode } = React.useContext(ThemeContext)
 
     // disable scroll on open modal
     React.useEffect(() => {
       if (isShow) {
-        document.body.style.height = '100vh'
-        document.body.style.overflow = 'hidden'
+        document.body.style.height = "100vh"
+        document.body.style.overflow = "hidden"
 
         return () => {
-          document.body.style.overflow = 'unset'
-          document.body.style.height = ''
+          document.body.style.overflow = "unset"
+          document.body.style.height = ""
         }
       }
     }, [isShow])
@@ -39,21 +40,22 @@ const Modal = React.forwardRef<HTMLDivElement, React.PropsWithChildren<IModalPro
           <div className={styles.modalWrapper}>
             <div
               className={cn(styles.modal, {
-                [styles.dark]: colorMode === 'dark',
-                [styles.light]: colorMode === 'light',
+                [styles.dark]: colorMode === "dark",
+                [styles.light]: colorMode === "light",
                 [styles.openModal]: isShow,
                 [styles.closeModal]: !isShow,
               })}
+              style={sx}
               //@ts-ignore
               ref={ref}
             >
               <div className={styles.modalTop}>
                 <h5
                   style={{
-                    whiteSpace: 'nowrap',
-                    maxWidth: '90%',
-                    textOverflow: 'ellipsis',
-                    overflow: 'hidden',
+                    whiteSpace: "nowrap",
+                    maxWidth: "90%",
+                    textOverflow: "ellipsis",
+                    overflow: "hidden",
                   }}
                 >
                   {modalTitle}

@@ -8,7 +8,7 @@ export type GroupsInitialState = {
 export type GroupCategoriesType = {
   id: number
   name: string
-  grous: GroupsShortType[]
+  groups: GroupsShortType[]
 }
 
 export type GroupsType = {
@@ -25,6 +25,6 @@ export type GroupsType = {
   educationPlan: { id: number; name: string }
 }
 
-export type GroupsShortType = Pick<GroupsType, "id" | "name">
+export type GroupsShortType = Pick<GroupsType, "id" | "name" | "courseNumber" | "students">
 
 // Pick || Omit

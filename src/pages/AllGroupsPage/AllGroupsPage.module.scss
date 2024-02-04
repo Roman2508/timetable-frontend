@@ -15,8 +15,14 @@
   width: calc(60% - 10px);
 }
 
-.col-left-title {
+.col-left-controls {
+  display: flex;
+  // justify-content: space-between;
+  align-items: center;
   margin-bottom: 20px;
+}
+
+.col-left-title {
   text-align: left;
   height: 36px;
   display: flex;
@@ -46,4 +52,16 @@
 
 .groupName:hover {
   text-decoration: underline;
+}
+
+.empty-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  & img {
+    width: 180px;
+    margin-bottom: 20px;
+  }
 }

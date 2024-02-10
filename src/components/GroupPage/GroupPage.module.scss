@@ -1,0 +1,42 @@
+.plan-wrapper {
+  margin: 16px 0;
+}
+
+.plan-title {
+  display: flex;
+  align-items: center;
+}
+
+.plan-divider {
+  width: 100%;
+  height: 0.8px;
+  &.light {
+    background-color: rgb(187, 187, 187);
+  }
+
+  &.dark {
+    background-color: #ffffff;
+  }
+}
+
+.plan-name {
+  border-radius: 20px;
+  padding: 8px 16px;
+  margin: 0 8px;
+
+  &.light {
+    background-color: #f4f4f4;
+  }
+
+  &.dark {
+    background-color: #3e4553;
+  }
+}
+
+.plan {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 8px;
+  gap: 8px;
+}

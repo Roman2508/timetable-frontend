@@ -1,7 +1,10 @@
 .wrapper {
   position: relative;
   display: inline-block;
-  width: 24px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  // width: 24px;
   height: 24px;
   margin: 4px;
 
@@ -39,6 +42,12 @@
   &:active {
     transform: scale(0.9);
   }
+}
+
+.text {
+  display: inline-block;
+  margin-left: 36px;
+  cursor: pointer;
 }
 
 // .touchRipple {

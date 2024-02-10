@@ -48,6 +48,7 @@ const Modal = React.forwardRef<HTMLDivElement, React.PropsWithChildren<IModalPro
               style={sx}
               //@ts-ignore
               ref={ref}
+              {...props}
             >
               <div className={styles.modalTop}>
                 <h5

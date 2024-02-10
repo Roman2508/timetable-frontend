@@ -6,29 +6,38 @@ import { ThemeContext } from "../../../App"
 
 interface ICheckboxProps {
   isChecked?: boolean
-  onClick?: (...args: any[]) => void
+  sx?: React.CSSProperties
   color?: "black" | "primary"
+  onClick?: (...args: any[]) => void
+  children?: JSX.Element | JSX.Element[] | string
 }
 
 const Checkbox: React.FC<ICheckboxProps> = ({
   color = "primary",
   isChecked = false,
   onClick = () => {},
+  children = "",
+  sx = {},
 }) => {
   const { colorMode } = React.useContext(ThemeContext)
 
   const [checked, setChecked] = React.useState(isChecked)
 
-  const handleChange = (event: any) => {
-    if (event.target.checked) {
-      setChecked(true)
-    } else {
+  const handleChange = (_: any) => {
+    if (isChecked) {
       setChecked(false)
+    } else {
+      setChecked(true)
     }
+    // if (event.target.checked) {
+    //   setChecked(true)
+    // } else {
+    //   setChecked(false)
+    // }
   }
 
   return (
-    <label className={styles.wrapper} onClick={() => onClick(checked)}>
+    <label className={styles.wrapper} onClick={() => onClick(checked)} style={sx}>
       <input type="checkbox" onChange={handleChange} />
 
       {checked ? (
@@ -63,6 +72,7 @@ const Checkbox: React.FC<ICheckboxProps> = ({
         </svg>
       )}
 
+      <span className={styles.text}>{children}</span>
       {/* <span className={styles.touchRipple}></span> */}
     </label>
   )

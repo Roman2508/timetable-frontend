@@ -1,49 +1,43 @@
-import React, { useContext } from "react"
-import { useSelector } from "react-redux"
-import { Link, NavLink, useNavigate } from "react-router-dom"
-import { MdDeleteOutline as DeleteIcon } from "react-icons/md"
-import { IoIosAddCircleOutline as AddIcon } from "react-icons/io"
-import { MdDriveFileRenameOutline as RenameIcon } from "react-icons/md"
+import React, { useContext } from 'react'
+import { useSelector } from 'react-redux'
+import { Link, NavLink } from 'react-router-dom'
+import { MdDeleteOutline as DeleteIcon } from 'react-icons/md'
+import { IoIosAddCircleOutline as AddIcon } from 'react-icons/io'
+import { MdDriveFileRenameOutline as RenameIcon } from 'react-icons/md'
 
-import { ThemeContext } from "../../App"
-import styles from "./AllGroupsPage.module.scss"
-import Text from "../../components/ui/Text/Text"
-import { useAppDispatch } from "../../redux/store"
-import Title from "../../components/ui/Title/Title"
-import Table from "../../components/ui/Table/Table"
-import ListItem from "../../components/ui/List/ListItem"
-import TableRow from "../../components/ui/Table/TableRow"
-import TableBody from "../../components/ui/Table/TableBody"
-import TableHead from "../../components/ui/Table/TableHead"
-import Skeleton from "../../components/ui/Skeleton/Skeleton"
-import ListWrapper from "../../components/ui/List/ListWrapper"
-import { groupsSelector } from "../../redux/groups/groupsSlice"
-import EmptyDarkImage from "../../assets/images/empty-dark.png"
-import EmptyLightImage from "../../assets/images/empty-light.png"
-import IconButton from "../../components/ui/IconButton/IconButton"
-import TableHeadCell from "../../components/ui/Table/TableHeadCell"
-import TableBodyCell from "../../components/ui/Table/TableBodyCell"
-import { GroupCategoriesType } from "../../redux/groups/groupsTypes"
-import GroupsPageModal from "../../components/GroupsPage/GroupsPageModal"
-import {
-  deleteGroup,
-  deleteGroupCategory,
-  getGroupCategories,
-} from "../../redux/groups/groupsAsyncActions"
+import { ThemeContext } from '../../App'
+import styles from './AllGroupsPage.module.scss'
+import Text from '../../components/ui/Text/Text'
+import { useAppDispatch } from '../../redux/store'
+import Title from '../../components/ui/Title/Title'
+import Table from '../../components/ui/Table/Table'
+import ListItem from '../../components/ui/List/ListItem'
+import TableRow from '../../components/ui/Table/TableRow'
+import TableBody from '../../components/ui/Table/TableBody'
+import TableHead from '../../components/ui/Table/TableHead'
+import Skeleton from '../../components/ui/Skeleton/Skeleton'
+import ListWrapper from '../../components/ui/List/ListWrapper'
+import { groupsSelector } from '../../redux/groups/groupsSlice'
+import EmptyDarkImage from '../../assets/images/empty-dark.png'
+import EmptyLightImage from '../../assets/images/empty-light.png'
+import IconButton from '../../components/ui/IconButton/IconButton'
+import TableHeadCell from '../../components/ui/Table/TableHeadCell'
+import TableBodyCell from '../../components/ui/Table/TableBodyCell'
+import { GroupCategoriesType } from '../../redux/groups/groupsTypes'
+import GroupsPageModal from '../../components/GroupsPage/GroupsPageModal'
+import { deleteGroup, deleteGroupCategory, getGroupCategories } from '../../redux/groups/groupsAsyncActions'
 
-export type GroupModalTypes = "create-category" | "update-category"
+export type GroupModalTypes = 'create-category' | 'update-category'
 
 const Groups: React.FC = () => {
   const dispatch = useAppDispatch()
 
   const { colorMode } = useContext(ThemeContext)
 
-  const { groupCategories, loadingStatus } = useSelector(groupsSelector)
+  const { groupCategories } = useSelector(groupsSelector)
 
-  const [activeGroupCategory, setActiveGroupCategory] = React.useState<null | GroupCategoriesType>(
-    null
-  )
-  const [groupModalTypes, setGroupModalTypes] = React.useState<GroupModalTypes>("create-category")
+  const [activeGroupCategory, setActiveGroupCategory] = React.useState<null | GroupCategoriesType>(null)
+  const [groupModalTypes, setGroupModalTypes] = React.useState<GroupModalTypes>('create-category')
   const [isModalOpen, setIsModalOpen] = React.useState(false)
 
   const onOpenModal = (modalType: GroupModalTypes) => {
@@ -51,9 +45,9 @@ const Groups: React.FC = () => {
     setIsModalOpen(true)
   }
 
-  const onDeleteEntity = async (type: "category" | "group", id: number) => {
-    if (type === "category") {
-      if (window.confirm("Ви дійсно хочете видалити категорію?")) {
+  const onDeleteEntity = async (type: 'category' | 'group', id: number) => {
+    if (type === 'category') {
+      if (window.confirm('Ви дійсно хочете видалити категорію?')) {
         await dispatch(deleteGroupCategory(id))
 
         if (groupCategories) {
@@ -62,8 +56,8 @@ const Groups: React.FC = () => {
       }
     }
 
-    if (type === "group") {
-      if (window.confirm("Ви дійсно хочете видалити групу?")) {
+    if (type === 'group') {
+      if (window.confirm('Ви дійсно хочете видалити групу?')) {
         dispatch(deleteGroup(id))
       }
     }
@@ -93,18 +87,18 @@ const Groups: React.FC = () => {
       />
 
       <div className={styles.container}>
-        <div className={styles["col-left"]}>
-          <div className={styles["col-left-controls"]}>
-            <Title Variant="h5" classNames={styles["col-left-title"]}>
+        <div className={styles['col-left']}>
+          <div className={styles['col-left-controls']}>
+            <Title Variant="h5" classNames={styles['col-left-title']}>
               Структурні підрозділи
             </Title>
 
-            <IconButton sx={{ marginLeft: "10px" }} onClick={() => onOpenModal("create-category")}>
-              <AddIcon size={24} />
+            <IconButton sx={{ marginLeft: '10px' }} onClick={() => onOpenModal('create-category')}>
+              <AddIcon size={24} title="Створити новий структурний підрозділ" />
             </IconButton>
           </div>
 
-          <ListWrapper sx={{ maxWidth: "100%" }}>
+          <ListWrapper sx={{ maxWidth: '100%' }}>
             {groupCategories
               ? groupCategories.map((el) => (
                   <ListItem
@@ -113,10 +107,8 @@ const Groups: React.FC = () => {
                     active={el.id === activeGroupCategory?.id}
                   >
                     <div className={styles.subdiv}>
-                      <div className={styles["subdiv-name"]}>{el.name}</div>
-                      <div className={styles["subdiv-groups-count"]}>
-                        Кількість груп: {el.groups.length}
-                      </div>
+                      <div className={styles['subdiv-name']}>{el.name}</div>
+                      <div className={styles['subdiv-groups-count']}>Кількість груп: {el.groups.length}</div>
                     </div>
                   </ListItem>
                 ))
@@ -126,43 +118,45 @@ const Groups: React.FC = () => {
           </ListWrapper>
         </div>
 
-        <div className={styles["col-right"]}>
-          <div className={styles["col-right-controls"]}>
+        <div className={styles['col-right']}>
+          <div className={styles['col-right-controls']}>
             <Title Variant="h5">Групи</Title>
 
-            <div className={styles["selected-group"]}>
+            <div className={styles['selected-group']}>
               {activeGroupCategory ? (
                 <>
                   <Title
                     Variant="h6"
                     sx={{
-                      marginRight: "10px",
-                      whiteSpace: "nowrap",
-                      textOverflow: "ellipsis",
-                      overflow: "hidden",
-                      maxWidth: "450px",
+                      marginRight: '10px',
+                      whiteSpace: 'nowrap',
+                      textOverflow: 'ellipsis',
+                      overflow: 'hidden',
+                      maxWidth: '450px',
                     }}
                   >
                     {activeGroupCategory.name}
                   </Title>
 
                   <IconButton
-                    sx={{ marginRight: "10px" }}
-                    onClick={() => onOpenModal("update-category")}
+                    sx={{ marginRight: '10px' }}
+                    onClick={() => onOpenModal('update-category')}
+                    title="Переіменувати структурний підрозділ"
                   >
                     <RenameIcon size={20} />
                   </IconButton>
 
                   <IconButton
-                    sx={{ marginRight: "10px" }}
-                    onClick={() => onDeleteEntity("category", activeGroupCategory.id)}
+                    sx={{ marginRight: '10px' }}
+                    onClick={() => onDeleteEntity('category', activeGroupCategory.id)}
+                    title="Видалити структурний підрозділ"
                   >
                     <DeleteIcon size={20} />
                   </IconButton>
 
                   <Link to="/group/create">
                     <IconButton>
-                      <AddIcon size={24} />
+                      <AddIcon size={24} title="Створити групу" />
                     </IconButton>
                   </Link>
                 </>
@@ -187,7 +181,7 @@ const Groups: React.FC = () => {
                     <TableRow key={el.id}>
                       <TableBodyCell
                         align="left"
-                        sx={{ whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden" }}
+                        sx={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}
                       >
                         <NavLink to={`/group/${el.id}`} className={styles.groupName}>
                           {el.name}
@@ -205,7 +199,7 @@ const Groups: React.FC = () => {
                           </IconButton>
                         </NavLink>
 
-                        <IconButton onClick={() => onDeleteEntity("group", el.id)}>
+                        <IconButton onClick={() => onDeleteEntity('group', el.id)}>
                           <DeleteIcon size={20} />
                         </IconButton>
                       </TableBodyCell>
@@ -213,9 +207,9 @@ const Groups: React.FC = () => {
                   ))
                 ) : (
                   <TableRow>
-                    <TableBodyCell colspan="4" sx={{ padding: "20px 0" }}>
-                      <div className={styles["empty-wrapper"]}>
-                        <img src={colorMode === "light" ? EmptyLightImage : EmptyDarkImage} />
+                    <TableBodyCell colspan="4" sx={{ padding: '20px 0' }}>
+                      <div className={styles['empty-wrapper']}>
+                        <img src={colorMode === 'light' ? EmptyLightImage : EmptyDarkImage} />
                         <Text>Пусто</Text>
                       </div>
                     </TableBodyCell>

@@ -24,11 +24,12 @@ const Checkbox: React.FC<ICheckboxProps> = ({
   const [checked, setChecked] = React.useState(isChecked)
 
   const handleChange = (_: any) => {
-    if (isChecked) {
-      setChecked(false)
-    } else {
-      setChecked(true)
-    }
+    // if (checked) {
+    //   setChecked(false)
+    // } else {
+    //   setChecked(true)
+    // }
+    setChecked(isChecked)
     // if (event.target.checked) {
     //   setChecked(true)
     // } else {
@@ -37,7 +38,7 @@ const Checkbox: React.FC<ICheckboxProps> = ({
   }
 
   return (
-    <label className={styles.wrapper} onClick={() => onClick(checked)} style={sx}>
+    <label className={styles.wrapper} onClick={onClick} style={sx}>
       <input type="checkbox" onChange={handleChange} />
 
       {checked ? (

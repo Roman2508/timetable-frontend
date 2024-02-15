@@ -61,6 +61,7 @@ export type UpdateGroupPayloadType = Pick<
   GroupsType,
   "id" | "name" | "students" | "courseNumber" | "yearOfAdmission" | "formOfEducation"
 > & { educationPlan: number; category: number }
+
 // {
 //   "name": "string",
 //   "students": 0,

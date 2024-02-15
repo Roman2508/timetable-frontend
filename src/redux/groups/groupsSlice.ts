@@ -1,7 +1,7 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { RootState } from '../store'
-import { LoadingStatusTypes } from '../appTypes'
-import { GroupCategoriesType, GroupsInitialState, GroupsType } from './groupsTypes'
+import { PayloadAction, createSlice } from "@reduxjs/toolkit"
+import { RootState } from "../store"
+import { LoadingStatusTypes } from "../appTypes"
+import { GroupCategoriesType, GroupsInitialState, GroupsType } from "./groupsTypes"
 import {
   createGroup,
   createGroupCategory,
@@ -11,17 +11,17 @@ import {
   getGroupCategories,
   updateGroup,
   updateGroupCategory,
-} from './groupsAsyncActions'
+} from "./groupsAsyncActions"
 
 const groupsInitialState: GroupsInitialState = {
   groupCategories: null,
   group: {
     id: 0,
-    name: '',
+    name: "",
     courseNumber: 1,
     yearOfAdmission: 1,
     students: 1,
-    formOfEducation: 'Денна',
+    formOfEducation: "Денна",
     specializationList: [],
     educationPlan: null,
     groupLoad: null,
@@ -32,48 +32,57 @@ const groupsInitialState: GroupsInitialState = {
 }
 
 const groupsSlice = createSlice({
-  name: 'groups',
+  name: "groups",
   initialState: groupsInitialState,
   reducers: {
     setLoadingStatus(state, action) {
       state.loadingStatus = action.payload
     },
-    updateGroupData(state, action) {
-      // action.payload = { field: typeof keyof groupsInitialState.group; value: any }
-      if (!action.payload.field || !action.payload.value) return
+    // updateGroupData(state, action) {
+    //   // action.payload = { field: typeof keyof groupsInitialState.group; value: any }
+    //   if (!action.payload.field || !action.payload.value) return
 
-      const group = { ...state.group, [action.payload.field]: action.payload.value }
-      state.group = group
-    },
-    clearGroupData(state) {
-      state.group = groupsInitialState.group
-    },
+    //   const group = { ...state.group, [action.payload.field]: action.payload.value }
+    //   state.group = group
+    // },
+    // clearGroupData(state) {
+    //   state.group = groupsInitialState.group
+    // },
   },
   extraReducers: (builder) => {
     /* getGroupCategories */
-    builder.addCase(getGroupCategories.fulfilled, (state, action: PayloadAction<GroupCategoriesType[]>) => {
-      state.groupCategories = action.payload
-    })
+    builder.addCase(
+      getGroupCategories.fulfilled,
+      (state, action: PayloadAction<GroupCategoriesType[]>) => {
+        state.groupCategories = action.payload
+      }
+    )
 
     /* createGroupCategory */
-    builder.addCase(createGroupCategory.fulfilled, (state, action: PayloadAction<GroupCategoriesType>) => {
-      state.groupCategories?.push(action.payload)
-    })
+    builder.addCase(
+      createGroupCategory.fulfilled,
+      (state, action: PayloadAction<GroupCategoriesType>) => {
+        state.groupCategories?.push(action.payload)
+      }
+    )
 
     /* updateGroupCategory */
-    builder.addCase(updateGroupCategory.fulfilled, (state, action: PayloadAction<GroupCategoriesType>) => {
-      if (!state.groupCategories) return
+    builder.addCase(
+      updateGroupCategory.fulfilled,
+      (state, action: PayloadAction<GroupCategoriesType>) => {
+        if (!state.groupCategories) return
 
-      const newCategories = state.groupCategories.map((el) => {
-        if (el.id === action.payload.id) {
-          return { ...el, ...action.payload }
-        }
+        const newCategories = state.groupCategories.map((el) => {
+          if (el.id === action.payload.id) {
+            return { ...el, ...action.payload }
+          }
 
-        return el
-      })
+          return el
+        })
 
-      state.groupCategories = newCategories
-    })
+        state.groupCategories = newCategories
+      }
+    )
 
     /* deleteGroupCategory */
     builder.addCase(deleteGroupCategory.fulfilled, (state, action: PayloadAction<number>) => {

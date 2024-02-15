@@ -19,7 +19,10 @@ export const getPlansCategories = createAsyncThunk(
     } catch (error) {
       thunkAPI.dispatch(setLoadingStatus(LoadingStatusTypes.ERROR))
       thunkAPI.dispatch(
-        setAppAlert({ message: (error as any).response.data.message, status: "error" })
+        setAppAlert({
+          message: (error as any).response.data.message || "Помилка при завантаженні",
+          status: "error",
+        })
       )
       throw error
     }

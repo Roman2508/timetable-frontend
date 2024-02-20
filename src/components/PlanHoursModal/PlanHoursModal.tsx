@@ -37,6 +37,8 @@ const PlanHoursModal: React.FC<IPlanHoursModalProps> = ({ isOpenModal, setIsOpen
           <Input setValue={() => {}} width="100px" sx={{ marginBottom: '12px' }} htmlType="number" />
           <Input setValue={() => {}} width="100px" sx={{ marginBottom: '12px' }} htmlType="number" />
           <Input setValue={() => {}} width="100px" sx={{ marginBottom: '12px' }} htmlType="number" />
+
+          {/* Додати інпут з вибором номеру семестра????? */}
         </div>
       </div>
 

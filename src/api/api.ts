@@ -1,21 +1,25 @@
+import axios from 'axios'
+
 import {
-  CreateAuditoryPayloadType,
-  UpdateAuditoryCategoryPayloadType,
-  UpdateAuditoryPayloadType,
-  CreateTeacherCategoryPayloadType,
-  UpdateTeacherCategoryPayloadType,
-  CreateTeacherPayloadType,
-  UpdateTeacherPayloadType,
   CreatePlanPayloadType,
   UpdateGroupPayloadType,
   CreateEntityPayloadType,
+  CreateSubjectPayloadType,
+  CreateTeacherPayloadType,
+  UpdateTeacherPayloadType,
+  CreateAuditoryPayloadType,
+  UpdateAuditoryPayloadType,
   UpdateEntityNamePayloadType,
+  UpdateSubjectNamePayloadType,
+  UpdateSubjectHoursPayloadType,
+  CreateTeacherCategoryPayloadType,
+  UpdateTeacherCategoryPayloadType,
+  UpdateAuditoryCategoryPayloadType,
 } from './apiTypes'
-import axios from 'axios'
-import { AuditoriesTypes, AuditoryCategoriesTypes } from '../redux/auditories/auditoriesTypes'
 import { TeachersCategoryType } from '../redux/teachers/teachersTypes'
-import { PlansCategoriesType, PlansType } from '../redux/plans/plansTypes'
-import { GroupCategoriesType, GroupsShortType, GroupsType } from '../redux/groups/groupsTypes'
+import { PlanType, PlansCategoriesType, PlansType } from '../redux/plans/plansTypes'
+import { AuditoriesTypes, AuditoryCategoriesTypes } from '../redux/auditories/auditoriesTypes'
+import { GroupCategoriesType, GroupsType } from '../redux/groups/groupsTypes'
 
 const instanse = axios.create({
   baseURL: 'http://localhost:7777/',
@@ -131,6 +135,25 @@ export const plansAPI = {
   },
   deletePlan(id: number) {
     return instanse.delete<number>(`/plans/${id}`)
+  },
+}
+
+export const planSubjectsAPI = {
+  getSubjects(id: number) {
+    return instanse.get<PlanType>(`/plans/${id}`)
+  },
+  createSubject(payload: CreateSubjectPayloadType) {
+    return instanse.post<any>('/plan-subject', payload)
+  },
+  updateSubjectName(payload: UpdateSubjectNamePayloadType) {
+    return instanse.patch<{ id: number; name: string }>('/plan-subject/name', payload)
+  },
+  updateSubjectHours(payload: UpdateSubjectHoursPayloadType) {
+    const { id, ...data } = payload
+    return instanse.patch<any>(`/plan-subject/hours/${id}`, data)
+  },
+  deleteSubject(id: number) {
+    return instanse.delete<number>(`/plan-subject/${id}`)
   },
 }
 

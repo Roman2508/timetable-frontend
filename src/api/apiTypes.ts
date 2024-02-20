@@ -1,5 +1,5 @@
-import { GroupsType } from "../redux/groups/groupsTypes"
-import { TeachersType } from "../redux/teachers/teachersTypes"
+import { GroupsType } from '../redux/groups/groupsTypes'
+import { TeachersType } from '../redux/teachers/teachersTypes'
 
 /* Global */
 
@@ -42,11 +42,11 @@ export type UpdateTeacherCategoryPayloadType = {
 
 export type CreateTeacherPayloadType = {
   category: number
-} & Omit<TeachersType, "id" | "category">
+} & Omit<TeachersType, 'id' | 'category'>
 
 export type UpdateTeacherPayloadType = {
   category: number
-} & Omit<TeachersType, "category">
+} & Omit<TeachersType, 'category'>
 
 /* Plans */
 
@@ -59,7 +59,7 @@ export type CreatePlanPayloadType = {
 
 export type UpdateGroupPayloadType = Pick<
   GroupsType,
-  "id" | "name" | "students" | "courseNumber" | "yearOfAdmission" | "formOfEducation"
+  'id' | 'name' | 'students' | 'courseNumber' | 'yearOfAdmission' | 'formOfEducation'
 > & { educationPlan: number; category: number }
 
 // {
@@ -71,3 +71,32 @@ export type UpdateGroupPayloadType = Pick<
 //   "educationPlan": 0
 //   "category": 0,
 // }
+
+/* plan-subjects */
+
+export type CreateSubjectPayloadType = {
+  name: string
+  planId: number
+}
+
+export type UpdateSubjectNamePayloadType = {
+  oldName: 'string'
+  newName: 'string'
+  planId: number
+}
+
+export type UpdateSubjectHoursPayloadType = {
+  id: number
+  name: string
+  plan: number
+  totalHours: number
+  semesterNumber: number
+  lectures: number
+  practical: number
+  laboratory: number
+  seminars: number
+  exams: number
+  examsConsulation: number
+  metodologicalGuidance: number
+  independentWork: number
+}
